@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sucovi - Dashboard de Métricas IG</title>
+  <link rel="stylesheet" href="css/style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns@3.0.0/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+</head>
+<body>
+  <header>
+    <div class="header-content">
+      <h1>Sucovi</h1>
+      <p class="subtitle">Dashboard de Métricas - Instagram</p>
+    </div>
+    <div class="header-stats" id="header-stats"></div>
+  </header>
+
+  <nav>
+    <button class="nav-btn active" data-view="overview">Overview</button>
+    <button class="nav-btn" data-view="comparativa">2025 vs 2026</button>
+    <button class="nav-btn" data-view="posts">Posts</button>
+    <button class="nav-btn" data-view="preferia">Pre-Feria</button>
+  </nav>
+
+  <main>
+    <!-- Overview -->
+    <section id="view-overview" class="view active">
+      <div class="kpi-grid">
+        <div class="kpi-card">
+          <span class="kpi-label">Seguidores</span>
+          <span class="kpi-value" id="kpi-followers">--</span>
+          <span class="kpi-delta" id="kpi-followers-delta"></span>
+        </div>
+        <div class="kpi-card">
+          <span class="kpi-label">Alcance (7d)</span>
+          <span class="kpi-value" id="kpi-reach">--</span>
+          <span class="kpi-delta" id="kpi-reach-delta"></span>
+        </div>
+        <div class="kpi-card">
+          <span class="kpi-label">Impresiones (7d)</span>
+          <span class="kpi-value" id="kpi-impressions">--</span>
+          <span class="kpi-delta" id="kpi-impressions-delta"></span>
+        </div>
+        <div class="kpi-card">
+          <span class="kpi-label">Engagement Rate</span>
+          <span class="kpi-value" id="kpi-engagement">--</span>
+          <span class="kpi-delta" id="kpi-engagement-delta"></span>
+        </div>
+        <div class="kpi-card">
+          <span class="kpi-label">Visitas al perfil (7d)</span>
+          <span class="kpi-value" id="kpi-profile-views">--</span>
+          <span class="kpi-delta" id="kpi-profile-views-delta"></span>
+        </div>
+        <div class="kpi-card">
+          <span class="kpi-label">Nuevos seguidores (7d)</span>
+          <span class="kpi-value" id="kpi-new-followers">--</span>
+          <span class="kpi-delta" id="kpi-new-followers-delta"></span>
+        </div>
+      </div>
+
+      <div class="charts-grid">
+        <div class="chart-container">
+          <h3>Seguidores (últimos 30 días)</h3>
+          <canvas id="chart-followers"></canvas>
+        </div>
+        <div class="chart-container">
+          <h3>Alcance diario</h3>
+          <canvas id="chart-reach"></canvas>
+        </div>
+        <div class="chart-container">
+          <h3>Impresiones diarias</h3>
+          <canvas id="chart-impressions"></canvas>
+        </div>
+        <div class="chart-container">
+          <h3>Visitas al perfil</h3>
+          <canvas id="chart-profile-views"></canvas>
+        </div>
+      </div>
+    </section>
+
+    <!-- Comparativa 2025 vs 2026 -->
+    <section id="view-comparativa" class="view">
+      <h2>Comparativa 2025 vs 2026</h2>
+      <div class="charts-grid">
+        <div class="chart-container wide">
+          <h3>Seguidores por mes</h3>
+          <canvas id="chart-compare-followers"></canvas>
+        </div>
+        <div class="chart-container wide">
+          <h3>Alcance por mes</h3>
+          <canvas id="chart-compare-reach"></canvas>
+        </div>
+        <div class="chart-container wide">
+          <h3>Engagement por mes</h3>
+          <canvas id="chart-compare-engagement"></canvas>
+        </div>
+      </div>
+      <div class="compare-table-container">
+        <h3>Resumen por feria</h3>
+        <table id="compare-table" class="data-table">
+          <thead>
+            <tr>
+              <th>Feria</th>
+              <th>Fecha</th>
+              <th>Seguidores</th>
+              <th>Reach (semana previa)</th>
+              <th>Engagement</th>
+              <th>Nuevos seguidores</th>
+            </tr>
+          </thead>
+          <tbody id="compare-table-body"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Posts -->
+    <section id="view-posts" class="view">
+      <h2>Performance de Posts</h2>
+      <div class="filters">
+        <select id="filter-type">
+          <option value="all">Todos los tipos</option>
+          <option value="IMAGE">Imagen</option>
+          <option value="VIDEO">Video / Reel</option>
+          <option value="CAROUSEL_ALBUM">Carousel</option>
+        </select>
+        <select id="filter-sort">
+          <option value="date">Más recientes</option>
+          <option value="reach">Mayor alcance</option>
+          <option value="engagement">Mayor engagement</option>
+          <option value="saves">Más guardados</option>
+        </select>
+      </div>
+      <table id="posts-table" class="data-table">
+        <thead>
+          <tr>
+            <th>Fecha</th>
+            <th>Tipo</th>
+            <th>Caption</th>
+            <th>Alcance</th>
+            <th>Impresiones</th>
+            <th>Likes</th>
+            <th>Comentarios</th>
+            <th>Guardados</th>
+            <th>Engagement</th>
+          </tr>
+        </thead>
+        <tbody id="posts-table-body"></tbody>
+      </table>
+    </section>
+
+    <!-- Pre-Feria -->
+    <section id="view-preferia" class="view">
+      <h2>Pre-Feria</h2>
+      <div class="countdown-container" id="countdown-container">
+        <div class="countdown-label">Próxima feria en</div>
+        <div class="countdown" id="countdown">--</div>
+      </div>
+      <div class="kpi-grid">
+        <div class="kpi-card highlight">
+          <span class="kpi-label">Reach últimos 14 días</span>
+          <span class="kpi-value" id="preferia-reach">--</span>
+        </div>
+        <div class="kpi-card highlight">
+          <span class="kpi-label">Nuevos seguidores (14d)</span>
+          <span class="kpi-value" id="preferia-new-followers">--</span>
+        </div>
+        <div class="kpi-card highlight">
+          <span class="kpi-label">Engagement promedio (14d)</span>
+          <span class="kpi-value" id="preferia-engagement">--</span>
+        </div>
+        <div class="kpi-card highlight">
+          <span class="kpi-label">Posts publicados (14d)</span>
+          <span class="kpi-value" id="preferia-posts">--</span>
+        </div>
+      </div>
+      <div class="charts-grid">
+        <div class="chart-container wide">
+          <h3>Alcance diario (últimas 2 semanas)</h3>
+          <canvas id="chart-preferia-reach"></canvas>
+        </div>
+      </div>
+
+      <div class="content-calendar">
+        <h3>Calendario de contenido sugerido</h3>
+        <div class="calendar-grid" id="calendar-grid"></div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>Sucovi Dashboard &mdash; Datos actualizados automáticamente vía Instagram Graph API</p>
+    <p class="last-update">Última actualización: <span id="last-update">--</span></p>
+  </footer>
+
+  <script src="js/charts.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
