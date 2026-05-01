@@ -150,12 +150,81 @@
     }
   }
 
+  // Tiny CSV parser — handles quoted fields. Enough for the spend list.
+  function parseCSVLine(line) {
+    const out = [];
+    let cur = '', q = false;
+    for (let i = 0; i < line.length; i++) {
+      const c = line[i];
+      if (q) {
+        if (c === '"' && line[i+1] === '"') { cur += '"'; i++; }
+        else if (c === '"') q = false;
+        else cur += c;
+      } else {
+        if (c === '"') q = true;
+        else if (c === ',') { out.push(cur); cur = ''; }
+        else cur += c;
+      }
+    }
+    out.push(cur);
+    return out;
+  }
+
+  function parseCSV(text) {
+    const lines = text.trim().split(/\r?\n/);
+    const headers = parseCSVLine(lines[0]);
+    return lines.slice(1).map(line => {
+      const fields = parseCSVLine(line);
+      const obj = {};
+      headers.forEach((h, i) => obj[h] = fields[i]);
+      return obj;
+    });
+  }
+
+  // Pulls the IG shortcode out of any /reel/, /reels/, or /p/ URL form
+  function shortcodeFromUrl(url) {
+    if (!url) return null;
+    const m = url.match(/\/(?:reel|reels|p)\/([^/?#]+)/);
+    return m ? m[1] : null;
+  }
+
+  async function loadPromotedSpend() {
+    try {
+      const res = await fetch('data/anuncios_estadisticas.csv');
+      if (!res.ok) return null;
+      const text = await res.text();
+      const rows = parseCSV(text);
+      const map = {};
+      rows.forEach(r => {
+        const code = shortcodeFromUrl(r.url_posteo);
+        const spend = parseFloat(r.total_gasto_ars);
+        if (code && !isNaN(spend)) map[code] = spend;
+      });
+      return map;
+    } catch (e) {
+      console.warn('Failed to load promoted spend CSV:', e);
+      return null;
+    }
+  }
+
   async function init() {
-    [metricsData, postsData, historicalData] = await Promise.all([
+    let promotedSpend;
+    [metricsData, postsData, historicalData, promotedSpend] = await Promise.all([
       loadJSON('data/metrics.json'),
       loadJSON('data/posts.json'),
       loadJSON('data/historical.json'),
+      loadPromotedSpend(),
     ]);
+
+    // Annotate posts with their ad spend (matched by shortcode in permalink)
+    if (promotedSpend && postsData && postsData.posts) {
+      postsData.posts.forEach(p => {
+        const code = shortcodeFromUrl(p.permalink);
+        if (code && promotedSpend[code] != null) {
+          p._spend = promotedSpend[code];
+        }
+      });
+    }
 
     renderOverview();
     renderPosts();
@@ -179,6 +248,11 @@
   function formatPercent(n) {
     if (n == null) return '--';
     return n.toFixed(2) + '%';
+  }
+
+  function formatARS(n) {
+    if (n == null) return '—';
+    return '$' + Math.round(n).toLocaleString('es-AR');
   }
 
   function formatDate(dateStr) {
@@ -435,7 +509,7 @@
     if (!tbody) return;
 
     if (!postsData || !postsData.posts || postsData.posts.length === 0) {
-      tbody.innerHTML = '<tr><td colspan="9" class="no-data">Cargando datos de posts...</td></tr>';
+      tbody.innerHTML = '<tr><td colspan="10" class="no-data">Cargando datos de posts...</td></tr>';
       return;
     }
 
@@ -478,6 +552,7 @@
       saves: (a, b) => dir * ((a.saved || 0) - (b.saved || 0)),
       shares: (a, b) => dir * ((a.shares || 0) - (b.shares || 0)),
       engagement: (a, b) => dir * ((a.engagement_rate || 0) - (b.engagement_rate || 0)),
+      spend: (a, b) => dir * ((a._spend || 0) - (b._spend || 0)),
     };
     posts.sort(sortFns[postsSortCol] || sortFns.date);
     return posts;
@@ -504,7 +579,7 @@
     updateSortArrows();
 
     if (filtered.length === 0) {
-      tbody.innerHTML = '<tr><td colspan="9" class="no-data">No hay posts en este rango</td></tr>';
+      tbody.innerHTML = '<tr><td colspan="10" class="no-data">No hay posts en este rango</td></tr>';
       return;
     }
 
@@ -520,8 +595,12 @@
         ? `<a class="post-link" href="${p.permalink}" target="_blank" rel="noopener noreferrer" title="Ver post en Instagram">${dateText}</a>`
         : dateText;
 
+      const spendCell = p._spend != null
+        ? `<span class="spend">${formatARS(p._spend)}</span>`
+        : '<span class="spend-empty">—</span>';
+
       return `
-        <tr>
+        <tr${p._spend != null ? ' class="row-paid"' : ''}>
           <td>${dateCell}</td>
           <td><span class="badge ${badgeClass}">${typeLabel}</span></td>
           <td class="caption-cell" title="${(p.caption || '').replace(/"/g, '&quot;')}">${caption}</td>
@@ -531,6 +610,7 @@
           <td>${formatNumber(p.saved)}</td>
           <td>${formatNumber(p.shares)}</td>
           <td>${p.engagement_rate != null ? formatPercent(p.engagement_rate) : '--'}</td>
+          <td>${spendCell}</td>
         </tr>
       `;
     }).join('');
