@@ -124,7 +124,7 @@
     // KPIs
     setKPI('kpi-followers', formatNumber(latest.followers_count));
     setKPI('kpi-reach', formatNumber(sumField(last7, 'reach')));
-    setKPI('kpi-impressions', formatNumber(sumField(last7, 'impressions')));
+    setKPI('kpi-engaged', formatNumber(sumField(last7, 'accounts_engaged')));
     setKPI('kpi-profile-views', formatNumber(sumField(last7, 'profile_views')));
 
     // Engagement rate
@@ -158,10 +158,10 @@
         setDelta('kpi-reach-delta', Math.round(((reachNow - reachPrev) / reachPrev) * 100), '%');
       }
 
-      const impNow = sumField(last7, 'impressions');
-      const impPrev = sumField(prev7, 'impressions');
-      if (impPrev > 0) {
-        setDelta('kpi-impressions-delta', Math.round(((impNow - impPrev) / impPrev) * 100), '%');
+      const engNow = sumField(last7, 'accounts_engaged');
+      const engPrev = sumField(prev7, 'accounts_engaged');
+      if (engPrev > 0) {
+        setDelta('kpi-engaged-delta', Math.round(((engNow - engPrev) / engPrev) * 100), '%');
       }
 
       const pvNow = sumField(last7, 'profile_views');
@@ -185,9 +185,9 @@
       data: last30.map(d => d.reach),
     }]);
 
-    createLineChart('chart-impressions', labels, [{
-      label: 'Impresiones',
-      data: last30.map(d => d.impressions),
+    createLineChart('chart-engaged', labels, [{
+      label: 'Cuentas activas',
+      data: last30.map(d => d.accounts_engaged),
     }]);
 
     createLineChart('chart-profile-views', labels, [{
@@ -199,13 +199,13 @@
   function renderEmptyOverview() {
     setKPI('kpi-followers', '~11.300');
     setKPI('kpi-reach', '--');
-    setKPI('kpi-impressions', '--');
+    setKPI('kpi-engaged', '--');
     setKPI('kpi-engagement', '--');
     setKPI('kpi-profile-views', '--');
     setKPI('kpi-new-followers', '--');
 
     // Render empty charts with placeholder message
-    ['chart-followers', 'chart-reach', 'chart-impressions', 'chart-profile-views'].forEach(id => {
+    ['chart-followers', 'chart-reach', 'chart-engaged', 'chart-profile-views'].forEach(id => {
       const canvas = document.getElementById(id);
       if (canvas) {
         const parent = canvas.parentElement;
@@ -291,7 +291,7 @@
     if (!tbody) return;
 
     if (!postsData || !postsData.posts || postsData.posts.length === 0) {
-      tbody.innerHTML = '<tr><td colspan="9" class="no-data">Conectá la API para ver performance de posts</td></tr>';
+      tbody.innerHTML = '<tr><td colspan="9" class="no-data">Cargando datos de posts...</td></tr>';
       setupPostFilters([]);
       return;
     }
@@ -334,10 +334,10 @@
           <td><span class="badge ${badgeClass}">${typeLabel}</span></td>
           <td class="caption-cell" title="${(p.caption || '').replace(/"/g, '&quot;')}">${caption}</td>
           <td>${formatNumber(p.reach)}</td>
-          <td>${formatNumber(p.impressions)}</td>
           <td>${formatNumber(p.like_count)}</td>
           <td>${formatNumber(p.comments_count)}</td>
           <td>${formatNumber(p.saved)}</td>
+          <td>${formatNumber(p.shares)}</td>
           <td>${p.engagement_rate != null ? formatPercent(p.engagement_rate) : '--'}</td>
         </tr>
       `;
