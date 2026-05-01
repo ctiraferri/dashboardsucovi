@@ -1,19 +1,19 @@
 {
-  "last_updated": "2026-05-01T03:33:08.658814+00:00",
+  "last_updated": "2026-05-01T09:23:06.251695+00:00",
   "account": {
     "id": "26948830788081972",
     "username": "feriaemprendedoressucovi",
-    "followers_count": 11200,
+    "followers_count": 11199,
     "follows_count": 815,
     "media_count": 903
   },
   "daily": [
     {
       "date": "2026-05-01",
-      "followers_count": 11200,
-      "reach": 4127,
-      "profile_views": 138,
-      "accounts_engaged": 219
+      "followers_count": 11199,
+      "reach": 2645,
+      "profile_views": 76,
+      "accounts_engaged": 148
     }
   ]
 }
