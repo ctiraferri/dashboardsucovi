@@ -480,3 +480,38 @@ footer {
   color: var(--text-muted);
   font-style: italic;
 }
+
+/* Token alert */
+.token-alert {
+  background: #fff3cd;
+  border: 1px solid #d4a017;
+  border-radius: var(--radius);
+  padding: 1rem 1.25rem;
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  color: #664d03;
+  font-size: 0.9rem;
+}
+
+.token-alert.urgent {
+  background: #f8d7da;
+  border-color: var(--red);
+  color: #58151c;
+}
+
+.token-alert-close {
+  background: none;
+  border: none;
+  font-size: 1.3rem;
+  cursor: pointer;
+  color: inherit;
+  opacity: 0.6;
+  padding: 0 0.25rem;
+}
+
+.token-alert-close:hover {
+  opacity: 1;
+}

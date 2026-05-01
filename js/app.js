@@ -5,6 +5,8 @@
 
   // --- Config ---
   const NEXT_FERIA_DATE = '2026-05-10';
+  const TOKEN_REFRESH_DATE = '2026-05-01'; // Fecha en que se generó/renovó el IG token
+  const TOKEN_WARN_DAYS = 50; // Avisar cuando falten 10 días para vencer (60 días de vida)
 
   const CONTENT_CALENDAR = [
     { day: -14, type: 'Reel', content: '"¿Qué es Sucovi?" - recap de la última feria (fotos/videos)' },
@@ -62,6 +64,7 @@
     renderPosts();
     renderPreFeria();
     renderLastUpdate();
+    checkTokenExpiry();
   }
 
   // --- Utility ---
@@ -569,6 +572,38 @@
       el.textContent = d.toLocaleString('es-AR');
     } else {
       el.textContent = 'Sin datos aún - conectá la API';
+    }
+  }
+
+  // --- Token Expiry Check ---
+  function checkTokenExpiry() {
+    if (!TOKEN_REFRESH_DATE) return;
+
+    const refreshed = new Date(TOKEN_REFRESH_DATE + 'T00:00:00');
+    const now = new Date();
+    const daysSinceRefresh = Math.floor((now - refreshed) / (1000 * 60 * 60 * 24));
+    const daysLeft = 60 - daysSinceRefresh;
+
+    if (daysSinceRefresh < TOKEN_WARN_DAYS) return;
+
+    const alertEl = document.getElementById('token-alert');
+    const textEl = document.getElementById('token-alert-text');
+    const closeBtn = document.getElementById('token-alert-close');
+    if (!alertEl || !textEl) return;
+
+    if (daysLeft <= 0) {
+      textEl.textContent = 'El token de Instagram venció. Renovalo y actualizá TOKEN_REFRESH_DATE en app.js y el secret IG_ACCESS_TOKEN en GitHub.';
+      alertEl.classList.add('urgent');
+    } else {
+      textEl.textContent = `El token de Instagram vence en ${daysLeft} días (renovado el ${formatDate(TOKEN_REFRESH_DATE)}). Renovalo desde Meta y actualizá el secret IG_ACCESS_TOKEN en GitHub.`;
+    }
+
+    alertEl.style.display = 'flex';
+
+    if (closeBtn) {
+      closeBtn.addEventListener('click', () => {
+        alertEl.style.display = 'none';
+      });
     }
   }
 
