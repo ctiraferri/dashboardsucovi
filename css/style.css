@@ -438,6 +438,12 @@ main h2::first-letter {
   border-bottom: 1px dashed var(--rule);
 }
 
+/* Numeric columns (Alcance → Pauta): right-aligned values + headers */
+.data-table th:nth-child(n+4),
+.data-table td:nth-child(n+4) {
+  text-align: right;
+}
+
 .data-table tbody tr:last-child td { border-bottom: 0; }
 
 .data-table th {
