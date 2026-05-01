@@ -1,24 +1,25 @@
 // charts.js - Chart.js configuration and chart creation for Sucovi Dashboard
 
 const CHART_COLORS = {
-  accent: '#222222',
-  accentLight: 'rgba(0, 0, 0, 0.08)',
-  green: '#2d8a56',
-  greenLight: 'rgba(45, 138, 86, 0.15)',
-  blue: '#555555',
-  blueLight: 'rgba(0, 0, 0, 0.06)',
-  yellow: '#b8860b',
-  yellowLight: 'rgba(184, 134, 11, 0.15)',
-  purple: '#666666',
-  purpleLight: 'rgba(0, 0, 0, 0.05)',
-  text: '#888888',
-  grid: 'rgba(0, 0, 0, 0.08)',
+  accent: '#94A3B8',
+  accentLight: 'rgba(148, 163, 184, 0.14)',
+  green: '#94A3B8',
+  greenLight: 'rgba(148, 163, 184, 0.10)',
+  blue: '#E2E5EC',
+  blueLight: 'rgba(226, 229, 236, 0.06)',
+  yellow: '#F87171',
+  yellowLight: 'rgba(248, 113, 113, 0.10)',
+  purple: 'rgba(226, 229, 236, 0.4)',
+  purpleLight: 'rgba(226, 229, 236, 0.04)',
+  text: 'rgba(226, 229, 236, 0.62)',
+  grid: 'rgba(226, 229, 236, 0.08)',
 };
 
 // Global Chart.js defaults
 Chart.defaults.color = CHART_COLORS.text;
 Chart.defaults.borderColor = CHART_COLORS.grid;
-Chart.defaults.font.family = "'Segoe UI', system-ui, sans-serif";
+Chart.defaults.font.family = "'Instrument Sans', system-ui, sans-serif";
+Chart.defaults.font.size = 11;
 
 const chartInstances = {};
 
@@ -76,13 +77,16 @@ function createLineChart(canvasId, labels, datasets, options = {}) {
           labels: { usePointStyle: true, padding: 15 },
         },
         tooltip: {
-          backgroundColor: 'rgba(255, 255, 255, 0.95)',
-          titleColor: '#1a1a1a',
-          bodyColor: '#666666',
-          borderColor: '#e0e0e0',
+          backgroundColor: 'rgba(22, 26, 34, 0.96)',
+          titleColor: '#E2E5EC',
+          titleFont: { family: "'JetBrains Mono', ui-monospace, monospace", size: 10, weight: '500' },
+          bodyColor: 'rgba(226, 229, 236, 0.85)',
+          bodyFont: { family: "'JetBrains Mono', ui-monospace, monospace", size: 11 },
+          borderColor: 'rgba(226, 229, 236, 0.24)',
           borderWidth: 1,
-          padding: 12,
-          cornerRadius: 8,
+          padding: 10,
+          cornerRadius: 2,
+          displayColors: false,
         },
       },
       scales: {
@@ -141,13 +145,16 @@ function createBarChart(canvasId, labels, datasets, options = {}) {
           labels: { usePointStyle: true, padding: 15 },
         },
         tooltip: {
-          backgroundColor: 'rgba(255, 255, 255, 0.95)',
-          titleColor: '#1a1a1a',
-          bodyColor: '#666666',
-          borderColor: '#e0e0e0',
+          backgroundColor: 'rgba(22, 26, 34, 0.96)',
+          titleColor: '#E2E5EC',
+          titleFont: { family: "'JetBrains Mono', ui-monospace, monospace", size: 10, weight: '500' },
+          bodyColor: 'rgba(226, 229, 236, 0.85)',
+          bodyFont: { family: "'JetBrains Mono', ui-monospace, monospace", size: 11 },
+          borderColor: 'rgba(226, 229, 236, 0.24)',
           borderWidth: 1,
-          padding: 12,
-          cornerRadius: 8,
+          padding: 10,
+          cornerRadius: 2,
+          displayColors: false,
         },
       },
       scales: {
@@ -172,17 +179,18 @@ function createComparisonChart(canvasId, labels, data2025, data2026, label2025, 
     {
       label: label2026 || '2026',
       data: data2026,
-      borderColor: '#2563eb',
-      backgroundColor: 'rgba(37, 99, 235, 0.12)',
-      borderWidth: 3,
+      borderColor: '#94A3B8',
+      backgroundColor: 'rgba(148, 163, 184, 0.16)',
+      borderWidth: 2,
     },
     {
       label: label2025 || '2025',
       data: data2025,
-      borderColor: '#dc2626',
-      backgroundColor: 'rgba(220, 38, 38, 0.08)',
-      borderDash: [6, 4],
-      borderWidth: 2,
+      borderColor: 'rgba(226, 229, 236, 0.5)',
+      backgroundColor: 'rgba(226, 229, 236, 0.04)',
+      borderDash: [4, 4],
+      borderWidth: 1.25,
+      pointRadius: 2,
     },
   ], options);
 }

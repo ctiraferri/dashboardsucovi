@@ -3,12 +3,19 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sucovi - Dashboard de Métricas IG</title>
+  <title>Sucovi · Dashboard de Métricas IG</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns@3.0.0/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.18/dist/lenis.min.js"></script>
 </head>
 <body>
+  <div id="scroll-progress" aria-hidden="true"></div>
   <header>
     <div class="header-content">
       <h1>Sucovi</h1>
@@ -34,33 +41,46 @@
       <div class="kpi-grid">
         <div class="kpi-card" title="Total de cuentas que siguen a @feriaemprendedoressucovi. Se actualiza diariamente.">
           <span class="kpi-label">Seguidores <span class="info-icon">i</span></span>
-          <span class="kpi-value" id="kpi-followers">--</span>
-          <span class="kpi-delta" id="kpi-followers-delta"></span>
+          <div class="kpi-num-block">
+            <span class="kpi-delta" id="kpi-followers-delta"></span>
+            <span class="kpi-value" id="kpi-followers">--</span>
+          </div>
         </div>
         <div class="kpi-card" title="Cantidad de cuentas unicas que vieron cualquier contenido (posts, stories, reels) en los ultimos 7 dias.">
           <span class="kpi-label">Alcance (7d) <span class="info-icon">i</span></span>
-          <span class="kpi-value" id="kpi-reach">--</span>
-          <span class="kpi-delta" id="kpi-reach-delta"></span>
+          <div class="kpi-num-block">
+            <span class="kpi-delta" id="kpi-reach-delta"></span>
+            <span class="kpi-value" id="kpi-reach">--</span>
+          </div>
         </div>
         <div class="kpi-card" title="Cuentas que interactuaron con el contenido (likes, comentarios, guardados, shares) en los ultimos 7 dias.">
           <span class="kpi-label">Cuentas activas (7d) <span class="info-icon">i</span></span>
-          <span class="kpi-value" id="kpi-engaged">--</span>
-          <span class="kpi-delta" id="kpi-engaged-delta"></span>
+          <div class="kpi-num-block">
+            <span class="kpi-delta" id="kpi-engaged-delta"></span>
+            <span class="kpi-value" id="kpi-engaged">--</span>
+          </div>
         </div>
         <div class="kpi-card" title="Promedio de interacciones (likes + comentarios + guardados + shares) dividido por el alcance de cada post. Mientras mas alto, mejor conecta el contenido con la audiencia.">
           <span class="kpi-label">Engagement Rate <span class="info-icon">i</span></span>
-          <span class="kpi-value" id="kpi-engagement">--</span>
-          <span class="kpi-delta" id="kpi-engagement-delta"></span>
+          <div class="kpi-num-block">
+            <span class="kpi-unit">%</span>
+            <span class="kpi-delta" id="kpi-engagement-delta"></span>
+            <span class="kpi-value" id="kpi-engagement">--</span>
+          </div>
         </div>
         <div class="kpi-card" title="Cantidad de veces que usuarios visitaron el perfil de @feriaemprendedoressucovi en los ultimos 7 dias.">
           <span class="kpi-label">Visitas al perfil (7d) <span class="info-icon">i</span></span>
-          <span class="kpi-value" id="kpi-profile-views">--</span>
-          <span class="kpi-delta" id="kpi-profile-views-delta"></span>
+          <div class="kpi-num-block">
+            <span class="kpi-delta" id="kpi-profile-views-delta"></span>
+            <span class="kpi-value" id="kpi-profile-views">--</span>
+          </div>
         </div>
         <div class="kpi-card" title="Diferencia neta de seguidores en los ultimos 7 dias. El porcentaje compara con los 7 dias anteriores.">
           <span class="kpi-label">Nuevos seguidores (7d) <span class="info-icon">i</span></span>
-          <span class="kpi-value" id="kpi-new-followers">--</span>
-          <span class="kpi-delta" id="kpi-new-followers-delta"></span>
+          <div class="kpi-num-block">
+            <span class="kpi-delta" id="kpi-new-followers-delta"></span>
+            <span class="kpi-value" id="kpi-new-followers">--</span>
+          </div>
         </div>
       </div>
 
@@ -115,7 +135,7 @@
         </select>
         <input type="date" id="filter-date-from" title="Desde">
         <input type="date" id="filter-date-to" title="Hasta">
-        <button id="filter-date-clear" class="nav-btn" style="padding:0.5rem 1rem;font-size:0.85rem;border:1px solid var(--border);border-radius:8px;">Limpiar fechas</button>
+        <button id="filter-date-clear">Limpiar fechas</button>
       </div>
       <table id="posts-table" class="data-table">
         <thead>
@@ -145,19 +165,28 @@
       <div class="kpi-grid">
         <div class="kpi-card highlight">
           <span class="kpi-label">Reach últimos 14 días</span>
-          <span class="kpi-value" id="preferia-reach">--</span>
+          <div class="kpi-num-block">
+            <span class="kpi-value" id="preferia-reach">--</span>
+          </div>
         </div>
         <div class="kpi-card highlight">
           <span class="kpi-label">Nuevos seguidores (14d)</span>
-          <span class="kpi-value" id="preferia-new-followers">--</span>
+          <div class="kpi-num-block">
+            <span class="kpi-value" id="preferia-new-followers">--</span>
+          </div>
         </div>
         <div class="kpi-card highlight">
           <span class="kpi-label">Engagement promedio (14d)</span>
-          <span class="kpi-value" id="preferia-engagement">--</span>
+          <div class="kpi-num-block">
+            <span class="kpi-unit">%</span>
+            <span class="kpi-value" id="preferia-engagement">--</span>
+          </div>
         </div>
         <div class="kpi-card highlight">
           <span class="kpi-label">Posts publicados (14d)</span>
-          <span class="kpi-value" id="preferia-posts">--</span>
+          <div class="kpi-num-block">
+            <span class="kpi-value" id="preferia-posts">--</span>
+          </div>
         </div>
       </div>
       <div class="charts-grid">
@@ -177,6 +206,7 @@
   <footer>
     <p>Sucovi Dashboard &mdash; Datos actualizados automáticamente vía Instagram Graph API</p>
     <p class="last-update">Última actualización: <span id="last-update">--</span></p>
+    <p class="powered-by">Powered by <a href="https://www.catconsultores.com.ar" target="_blank" rel="noopener noreferrer">CatConsultores</a></p>
   </footer>
 
   <script src="js/charts.js"></script>

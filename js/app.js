@@ -29,6 +29,97 @@
   let postsData = null;
   let historicalData = null;
 
+  // --- Motion: Lenis smooth-scroll + GSAP counters + ScrollTrigger progress ---
+  // No view-switch / fade-up reveals — those felt frame-y. Each library has
+  // exactly one job here, so the motion is intentional and not jank-prone:
+  //   • Lenis        → smooth wheel scrolling
+  //   • GSAP         → KPI count-up animation on initial render
+  //   • ScrollTrigger → top progress bar (scrubbed against scroll position)
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const motionEnabled = !prefersReducedMotion;
+
+  if (motionEnabled && window.gsap && window.ScrollTrigger) {
+    gsap.registerPlugin(ScrollTrigger);
+  }
+
+  if (motionEnabled && window.Lenis) {
+    const lenis = new Lenis({
+      duration: 1.0,
+      easing: (t) => 1 - Math.pow(1 - t, 3), // power3.out
+      smoothWheel: true,
+      syncTouch: false,
+      wheelMultiplier: 1,
+    });
+
+    if (window.gsap && window.ScrollTrigger) {
+      lenis.on('scroll', ScrollTrigger.update);
+      gsap.ticker.add((time) => lenis.raf(time * 1000));
+      gsap.ticker.lagSmoothing(0);
+    } else {
+      function rafLoop(time) { lenis.raf(time); requestAnimationFrame(rafLoop); }
+      requestAnimationFrame(rafLoop);
+    }
+  }
+
+  // Top scroll-progress bar driven by ScrollTrigger.scrub
+  if (motionEnabled && window.gsap && window.ScrollTrigger) {
+    gsap.to('#scroll-progress', {
+      width: '100%',
+      ease: 'none',
+      scrollTrigger: {
+        trigger: document.documentElement,
+        start: 'top top',
+        end: 'bottom bottom',
+        scrub: 0.3,
+      },
+    });
+  }
+
+  // Animate a numeric KPI value from 0 → target, formatting on every tick
+  // so K/M/% suffixes appear correctly throughout. Falls back to instant set
+  // if GSAP is unavailable or the user prefers reduced motion.
+  function animateKPI(id, value, formatter) {
+    const el = document.getElementById(id);
+    if (!el) return;
+    if (value == null || isNaN(value)) {
+      el.textContent = '--';
+      return;
+    }
+    const fmt = formatter || formatNumber;
+    if (!motionEnabled || !window.gsap) {
+      el.textContent = fmt(value);
+      return;
+    }
+    const obj = { v: 0 };
+    gsap.to(obj, {
+      v: value,
+      duration: 1.1,
+      ease: 'power2.out',
+      onUpdate: () => { el.textContent = fmt(obj.v); },
+      onComplete: () => { el.textContent = fmt(value); },
+    });
+  }
+
+  // --- View activation ----------------------------------------------------
+  // Charts that live inside non-active views can't be created during init():
+  // the canvas's parent is `display:none`, so Chart.js measures it as 0×0
+  // and the chart never animates in correctly. We defer rendering each
+  // non-overview view's content until the first time it's activated.
+  const renderedViews = new Set(['overview', 'posts']);
+
+  function ensureViewRendered(viewKey) {
+    if (renderedViews.has(viewKey)) return;
+    renderedViews.add(viewKey);
+    if (viewKey === 'comparativa') {
+      renderComparativa();
+    } else if (viewKey === 'preferia') {
+      renderCountdown();
+      renderPreFeriaKPIs();
+      renderPreFeriaChart();
+      renderContentCalendar();
+    }
+  }
+
   // --- Navigation ---
   document.querySelectorAll('.nav-btn').forEach(btn => {
     btn.addEventListener('click', () => {
@@ -36,7 +127,14 @@
       document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
       btn.classList.add('active');
       const viewId = 'view-' + btn.dataset.view;
-      document.getElementById(viewId).classList.add('active');
+      const view = document.getElementById(viewId);
+      view.classList.add('active');
+      window.scrollTo({ top: 0, behavior: 'auto' });
+      // Render the view's contents the first time it becomes visible — this
+      // guarantees the canvas has real dimensions before Chart.js measures.
+      ensureViewRendered(btn.dataset.view);
+      // ScrollTrigger needs to recompute when content visibility changes
+      if (window.ScrollTrigger) ScrollTrigger.refresh();
     });
   });
 
@@ -60,11 +158,14 @@
     ]);
 
     renderOverview();
-    renderComparativa();
     renderPosts();
-    renderPreFeria();
     renderLastUpdate();
     checkTokenExpiry();
+    // Comparativa and Pre-Feria render lazily on first view activation
+    // (see ensureViewRendered) so their canvases get real dimensions.
+
+    // Re-measure for the scroll-progress ScrollTrigger now that data fills layout
+    if (window.ScrollTrigger) requestAnimationFrame(() => ScrollTrigger.refresh());
   }
 
   // --- Utility ---
@@ -137,15 +238,15 @@
     const last7 = getLast(daily, 7);
     const prev7 = daily.slice(-14, -7);
 
-    // KPIs
-    setKPI('kpi-followers', formatNumber(latest.followers_count));
-    setKPI('kpi-reach', formatNumber(sumField(last7, 'reach')));
-    setKPI('kpi-profile-views', formatNumber(sumField(last7, 'profile_views')));
+    // KPIs (count up from 0 via GSAP)
+    animateKPI('kpi-followers', latest.followers_count, formatNumber);
+    animateKPI('kpi-reach', sumField(last7, 'reach'), formatNumber);
+    animateKPI('kpi-profile-views', sumField(last7, 'profile_views'), formatNumber);
 
     // Accounts engaged: use daily data if available, else estimate from posts
     const totalEngaged7 = sumField(last7, 'accounts_engaged');
     if (totalEngaged7 > 0) {
-      setKPI('kpi-engaged', formatNumber(totalEngaged7));
+      animateKPI('kpi-engaged', totalEngaged7, formatNumber);
     } else if (postsData && postsData.posts) {
       const sevenDaysAgo = new Date();
       sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
@@ -154,23 +255,24 @@
       );
       const engaged = recentPosts.reduce((sum, p) =>
         sum + (p.like_count || 0) + (p.comments_count || 0) + (p.saved || 0) + (p.shares || 0), 0);
-      setKPI('kpi-engaged', formatNumber(engaged));
+      animateKPI('kpi-engaged', engaged, formatNumber);
     }
 
-    // Engagement rate: calculate from posts data for accuracy
+    // Engagement rate: just the number — the "%" lives above the value (kpi-unit)
+    const fmt2 = (n) => n.toFixed(2);
     if (latest.followers_count && postsData && postsData.posts && postsData.posts.length > 0) {
       const avgEngRate = postsData.posts.reduce((sum, p) => sum + (p.engagement_rate || 0), 0) / postsData.posts.length;
-      setKPI('kpi-engagement', formatPercent(avgEngRate));
+      animateKPI('kpi-engagement', avgEngRate, fmt2);
     } else if (latest.followers_count && totalEngaged7 > 0) {
       const avgEngaged = totalEngaged7 / last7.length;
       const engRate = (avgEngaged / latest.followers_count) * 100;
-      setKPI('kpi-engagement', formatPercent(engRate));
+      animateKPI('kpi-engagement', engRate, fmt2);
     }
 
     // New followers (7d)
     if (last7.length >= 2) {
       const newFollowers = (last7[last7.length - 1].followers_count || 0) - (last7[0].followers_count || 0);
-      setKPI('kpi-new-followers', formatNumber(newFollowers));
+      animateKPI('kpi-new-followers', newFollowers, formatNumber);
 
       if (prev7.length >= 2) {
         const prevNew = (prev7[prev7.length - 1].followers_count || 0) - (prev7[0].followers_count || 0);
@@ -309,12 +411,17 @@
     const posts2025 = keys2025.map(m => agg2025[m]?.count || null);
     const posts2026 = keys2026.map(m => agg2026[m]?.count || null);
 
-    // Render comparison charts
-    createComparisonChart('chart-compare-reach', months, reach2025, reach2026, '2025', '2026');
+    // Render comparison charts (aspectRatio: 4 → half the default height)
+    createComparisonChart('chart-compare-reach', months, reach2025, reach2026, '2025', '2026', {
+      aspectRatio: 4,
+    });
     createComparisonChart('chart-compare-engagement', months, engagement2025, engagement2026, '2025', '2026', {
+      aspectRatio: 4,
       yFormat: v => v + '%',
     });
-    createComparisonChart('chart-compare-posts', months, posts2025, posts2026, '2025', '2026');
+    createComparisonChart('chart-compare-posts', months, posts2025, posts2026, '2025', '2026', {
+      aspectRatio: 4,
+    });
 
   }
 
@@ -408,9 +515,14 @@
                         p.media_type === 'VIDEO' ? 'Reel' : 'Carousel';
       const caption = (p.caption || '').substring(0, 60);
 
+      const dateText = formatDate(p.timestamp?.substring(0, 10));
+      const dateCell = p.permalink
+        ? `<a class="post-link" href="${p.permalink}" target="_blank" rel="noopener noreferrer" title="Ver post en Instagram">${dateText}</a>`
+        : dateText;
+
       return `
         <tr>
-          <td>${formatDate(p.timestamp?.substring(0, 10))}</td>
+          <td>${dateCell}</td>
           <td><span class="badge ${badgeClass}">${typeLabel}</span></td>
           <td class="caption-cell" title="${(p.caption || '').replace(/"/g, '&quot;')}">${caption}</td>
           <td>${formatNumber(p.reach)}</td>
@@ -500,14 +612,14 @@
       return;
     }
 
-    setKPI('preferia-reach', formatNumber(sumField(last14, 'reach')));
+    animateKPI('preferia-reach', sumField(last14, 'reach'), formatNumber);
 
     if (last14.length >= 2) {
       const newF = (last14[last14.length - 1].followers_count || 0) - (last14[0].followers_count || 0);
-      setKPI('preferia-new-followers', formatNumber(newF));
+      animateKPI('preferia-new-followers', newF, formatNumber);
     }
 
-    // Average engagement from posts in last 14 days
+    // Average engagement from posts in last 14 days (number only — % lives above)
     if (postsData && postsData.posts) {
       const twoWeeksAgo = new Date();
       twoWeeksAgo.setDate(twoWeeksAgo.getDate() - 14);
@@ -516,11 +628,11 @@
       );
       if (recentPosts.length > 0) {
         const avg = recentPosts.reduce((sum, p) => sum + p.engagement_rate, 0) / recentPosts.length;
-        setKPI('preferia-engagement', formatPercent(avg));
+        animateKPI('preferia-engagement', avg, (n) => n.toFixed(2));
       }
     }
 
-    // Posts count from postsData in last 14 days
+    // Posts count in last 14 days
     if (postsData && postsData.posts) {
       const twoWeeksAgo = new Date();
       twoWeeksAgo.setDate(twoWeeksAgo.getDate() - 14);
@@ -528,7 +640,7 @@
         if (!p.timestamp) return false;
         return new Date(p.timestamp) >= twoWeeksAgo;
       });
-      setKPI('preferia-posts', recentPosts.length);
+      animateKPI('preferia-posts', recentPosts.length, formatNumber);
     }
   }
 
