@@ -485,16 +485,20 @@
     const posts2025 = keys2025.map(m => agg2025[m]?.count || null);
     const posts2026 = keys2026.map(m => agg2026[m]?.count || null);
 
-    // Render comparison charts (aspectRatio: 4 → half the default height)
+    // Render comparison charts. Desktop uses aspectRatio 4 (half default height,
+    // looks great wide). On mobile (single column ~320px) that becomes ~80px
+    // tall and is unreadable, so we fall back to the default 2.
+    const isMobile = window.matchMedia('(max-width: 768px)').matches;
+    const baseRatio = isMobile ? 2 : 4;
     createComparisonChart('chart-compare-reach', months, reach2025, reach2026, '2025', '2026', {
-      aspectRatio: 4,
+      aspectRatio: baseRatio,
     });
     createComparisonChart('chart-compare-engagement', months, engagement2025, engagement2026, '2025', '2026', {
-      aspectRatio: 4,
+      aspectRatio: baseRatio,
       yFormat: v => v + '%',
     });
     createComparisonChart('chart-compare-posts', months, posts2025, posts2026, '2025', '2026', {
-      aspectRatio: 4,
+      aspectRatio: baseRatio,
     });
 
   }

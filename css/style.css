@@ -423,12 +423,22 @@ main h2::first-letter {
 }
 
 /* ============ TABLES ============ */
+/* Wrapper around the posts table — lets it scroll horizontally on mobile
+   without forcing horizontal scroll on the whole page. On desktop the
+   table fits entirely inside, so the wrapper is visually a no-op. */
+.data-table-wrap {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  border: 1px solid var(--rule);
+  background: var(--bg);
+}
+
 .data-table {
   width: 100%;
   border-collapse: collapse;
   font-size: 13px;
-  border: 1px solid var(--rule);
   background: var(--bg);
+  /* outer border lives on .data-table-wrap so the scroll edges don't double */
 }
 
 .data-table th,
@@ -965,12 +975,14 @@ footer p:first-child {
   .kpi-value { font-size: 32px; }
 
   .charts-grid { grid-template-columns: 1fr; }
+  /* Override the desktop ID-scoped 2x2 — at this width 2 cols squeeze too much */
+  #view-overview .charts-grid { grid-template-columns: 1fr; }
   .chart-container { padding: 20px; }
 
   .countdown { font-size: 56px; }
   .countdown-container { padding: 36px var(--pad); }
 
-  .data-table { font-size: 11px; }
+  .data-table { font-size: 11px; min-width: 720px; }
   .data-table th, .data-table td { padding: 9px 10px; }
   .data-table tbody td:first-child { font-size: 13px; }
 }
