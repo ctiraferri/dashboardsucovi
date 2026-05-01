@@ -1,19 +1,222 @@
 {
-  "last_updated": "2026-05-01T09:23:06.251695+00:00",
+  "last_updated": "2026-05-01T14:20:47.781209+00:00",
   "account": {
     "id": "26948830788081972",
     "username": "feriaemprendedoressucovi",
-    "followers_count": 11199,
-    "follows_count": 815,
+    "followers_count": 11198,
+    "follows_count": 816,
     "media_count": 903
   },
   "daily": [
     {
+      "date": "2026-04-02",
+      "followers_count": 10892,
+      "reach": 3521,
+      "profile_views": 0,
+      "accounts_engaged": 0
+    },
+    {
+      "date": "2026-04-03",
+      "followers_count": 10900,
+      "reach": 926,
+      "profile_views": 0,
+      "accounts_engaged": 0
+    },
+    {
+      "date": "2026-04-04",
+      "followers_count": 10906,
+      "reach": 604,
+      "profile_views": 0,
+      "accounts_engaged": 0
+    },
+    {
+      "date": "2026-04-05",
+      "followers_count": 10910,
+      "reach": 521,
+      "profile_views": 0,
+      "accounts_engaged": 0
+    },
+    {
+      "date": "2026-04-06",
+      "followers_count": 10916,
+      "reach": 182,
+      "profile_views": 0,
+      "accounts_engaged": 0
+    },
+    {
+      "date": "2026-04-07",
+      "followers_count": 10927,
+      "reach": 2258,
+      "profile_views": 0,
+      "accounts_engaged": 0
+    },
+    {
+      "date": "2026-04-08",
+      "followers_count": 10939,
+      "reach": 1677,
+      "profile_views": 0,
+      "accounts_engaged": 0
+    },
+    {
+      "date": "2026-04-09",
+      "followers_count": 10952,
+      "reach": 797,
+      "profile_views": 0,
+      "accounts_engaged": 0
+    },
+    {
+      "date": "2026-04-10",
+      "followers_count": 10981,
+      "reach": 3802,
+      "profile_views": 0,
+      "accounts_engaged": 0
+    },
+    {
+      "date": "2026-04-11",
+      "followers_count": 11010,
+      "reach": 5314,
+      "profile_views": 0,
+      "accounts_engaged": 0
+    },
+    {
+      "date": "2026-04-12",
+      "followers_count": 11071,
+      "reach": 5390,
+      "profile_views": 0,
+      "accounts_engaged": 0
+    },
+    {
+      "date": "2026-04-13",
+      "followers_count": 11091,
+      "reach": 1993,
+      "profile_views": 0,
+      "accounts_engaged": 0
+    },
+    {
+      "date": "2026-04-14",
+      "followers_count": 11105,
+      "reach": 2354,
+      "profile_views": 0,
+      "accounts_engaged": 0
+    },
+    {
+      "date": "2026-04-15",
+      "followers_count": 11112,
+      "reach": 1698,
+      "profile_views": 0,
+      "accounts_engaged": 0
+    },
+    {
+      "date": "2026-04-16",
+      "followers_count": 11117,
+      "reach": 1138,
+      "profile_views": 0,
+      "accounts_engaged": 0
+    },
+    {
+      "date": "2026-04-17",
+      "followers_count": 11125,
+      "reach": 2556,
+      "profile_views": 0,
+      "accounts_engaged": 0
+    },
+    {
+      "date": "2026-04-18",
+      "followers_count": 11137,
+      "reach": 572,
+      "profile_views": 0,
+      "accounts_engaged": 0
+    },
+    {
+      "date": "2026-04-19",
+      "followers_count": 11144,
+      "reach": 344,
+      "profile_views": 0,
+      "accounts_engaged": 0
+    },
+    {
+      "date": "2026-04-20",
+      "followers_count": 11149,
+      "reach": 338,
+      "profile_views": 0,
+      "accounts_engaged": 0
+    },
+    {
+      "date": "2026-04-21",
+      "followers_count": 11155,
+      "reach": 239,
+      "profile_views": 0,
+      "accounts_engaged": 0
+    },
+    {
+      "date": "2026-04-22",
+      "followers_count": 11160,
+      "reach": 246,
+      "profile_views": 0,
+      "accounts_engaged": 0
+    },
+    {
+      "date": "2026-04-23",
+      "followers_count": 11168,
+      "reach": 497,
+      "profile_views": 0,
+      "accounts_engaged": 0
+    },
+    {
+      "date": "2026-04-24",
+      "followers_count": 11175,
+      "reach": 319,
+      "profile_views": 0,
+      "accounts_engaged": 0
+    },
+    {
+      "date": "2026-04-25",
+      "followers_count": 11181,
+      "reach": 975,
+      "profile_views": 0,
+      "accounts_engaged": 0
+    },
+    {
+      "date": "2026-04-26",
+      "followers_count": 11185,
+      "reach": 202,
+      "profile_views": 0,
+      "accounts_engaged": 0
+    },
+    {
+      "date": "2026-04-27",
+      "followers_count": 11188,
+      "reach": 96,
+      "profile_views": 0,
+      "accounts_engaged": 0
+    },
+    {
+      "date": "2026-04-28",
+      "followers_count": 11193,
+      "reach": 3294,
+      "profile_views": 0,
+      "accounts_engaged": 0
+    },
+    {
+      "date": "2026-04-29",
+      "followers_count": 11198,
+      "reach": 2090,
+      "profile_views": 0,
+      "accounts_engaged": 0
+    },
+    {
+      "date": "2026-04-30",
+      "followers_count": 11198,
+      "reach": 2637,
+      "profile_views": 0,
+      "accounts_engaged": 0
+    },
+    {
       "date": "2026-05-01",
-      "followers_count": 11199,
-      "reach": 2645,
-      "profile_views": 76,
-      "accounts_engaged": 148
+      "followers_count": 11198,
+      "reach": 2807,
+      "profile_views": 84,
+      "accounts_engaged": 152
     }
   ]
 }

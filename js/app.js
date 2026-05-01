@@ -4,7 +4,7 @@
   'use strict';
 
   // --- Config ---
-  const NEXT_FERIA_DATE = null; // Set to 'YYYY-MM-DD' when known, e.g. '2026-06-15'
+  const NEXT_FERIA_DATE = '2026-05-10';
 
   const CONTENT_CALENDAR = [
     { day: -14, type: 'Reel', content: '"¿Qué es Sucovi?" - recap de la última feria (fotos/videos)' },
@@ -109,6 +109,19 @@
     return arr.reduce((sum, item) => sum + (item[field] || 0), 0);
   }
 
+  function showNoData(canvasId, message) {
+    const canvas = document.getElementById(canvasId);
+    if (!canvas) return;
+    canvas.style.display = 'none';
+    const parent = canvas.parentElement;
+    if (!parent.querySelector('.no-data')) {
+      const msg = document.createElement('div');
+      msg.className = 'no-data';
+      msg.textContent = message;
+      parent.appendChild(msg);
+    }
+  }
+
   // --- Overview ---
   function renderOverview() {
     const daily = getDailyData();
@@ -124,15 +137,30 @@
     // KPIs
     setKPI('kpi-followers', formatNumber(latest.followers_count));
     setKPI('kpi-reach', formatNumber(sumField(last7, 'reach')));
-    setKPI('kpi-engaged', formatNumber(sumField(last7, 'accounts_engaged')));
     setKPI('kpi-profile-views', formatNumber(sumField(last7, 'profile_views')));
 
-    // Engagement rate
-    if (latest.followers_count && last7.length > 0) {
-      const totalEngagement = last7.reduce((sum, d) => {
-        return sum + (d.likes || 0) + (d.comments || 0) + (d.saves || 0);
-      }, 0);
-      const engRate = (totalEngagement / (latest.followers_count * last7.length)) * 100;
+    // Accounts engaged: use daily data if available, else estimate from posts
+    const totalEngaged7 = sumField(last7, 'accounts_engaged');
+    if (totalEngaged7 > 0) {
+      setKPI('kpi-engaged', formatNumber(totalEngaged7));
+    } else if (postsData && postsData.posts) {
+      const sevenDaysAgo = new Date();
+      sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
+      const recentPosts = postsData.posts.filter(p =>
+        p.timestamp && new Date(p.timestamp) >= sevenDaysAgo
+      );
+      const engaged = recentPosts.reduce((sum, p) =>
+        sum + (p.like_count || 0) + (p.comments_count || 0) + (p.saved || 0) + (p.shares || 0), 0);
+      setKPI('kpi-engaged', formatNumber(engaged));
+    }
+
+    // Engagement rate: calculate from posts data for accuracy
+    if (latest.followers_count && postsData && postsData.posts && postsData.posts.length > 0) {
+      const avgEngRate = postsData.posts.reduce((sum, p) => sum + (p.engagement_rate || 0), 0) / postsData.posts.length;
+      setKPI('kpi-engagement', formatPercent(avgEngRate));
+    } else if (latest.followers_count && totalEngaged7 > 0) {
+      const avgEngaged = totalEngaged7 / last7.length;
+      const engRate = (avgEngaged / latest.followers_count) * 100;
       setKPI('kpi-engagement', formatPercent(engRate));
     }
 
@@ -185,15 +213,26 @@
       data: last30.map(d => d.reach),
     }]);
 
-    createLineChart('chart-engaged', labels, [{
-      label: 'Cuentas activas',
-      data: last30.map(d => d.accounts_engaged),
-    }]);
+    // Only render engaged/profile-views charts if there's meaningful data
+    const hasEngagedData = last30.some(d => d.accounts_engaged > 0);
+    if (hasEngagedData) {
+      createLineChart('chart-engaged', labels, [{
+        label: 'Cuentas activas',
+        data: last30.map(d => d.accounts_engaged),
+      }]);
+    } else {
+      showNoData('chart-engaged', 'Datos disponibles solo para el día actual (limitación de la API)');
+    }
 
-    createLineChart('chart-profile-views', labels, [{
-      label: 'Visitas al perfil',
-      data: last30.map(d => d.profile_views),
-    }]);
+    const hasProfileData = last30.some(d => d.profile_views > 0);
+    if (hasProfileData) {
+      createLineChart('chart-profile-views', labels, [{
+        label: 'Visitas al perfil',
+        data: last30.map(d => d.profile_views),
+      }]);
+    } else {
+      showNoData('chart-profile-views', 'Datos disponibles solo para el día actual (limitación de la API)');
+    }
   }
 
   function renderEmptyOverview() {
@@ -220,106 +259,144 @@
   }
 
   // --- Comparativa 2025 vs 2026 ---
-  function renderComparativa() {
-    if (!historicalData) return;
-
-    const months = ['Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'];
-    const data2025 = historicalData.monthly || [];
-
-    // Extract 2025 data
-    const followers2025 = data2025.map(m => m.followers);
-    const reach2025 = data2025.map(m => m.reach);
-    const engagement2025 = data2025.map(m => m.engagement_rate);
-
-    // Build 2026 data from daily metrics (aggregate by month)
-    const daily = getDailyData();
-    const monthlyAgg2026 = {};
-
-    daily.forEach(d => {
-      const month = d.date.substring(0, 7); // YYYY-MM
-      if (!month.startsWith('2026')) return;
-      if (!monthlyAgg2026[month]) {
-        monthlyAgg2026[month] = { followers: 0, reach: 0, engagement: 0, count: 0 };
+  function aggregatePostsByMonth(year) {
+    if (!postsData || !postsData.posts) return {};
+    const agg = {};
+    postsData.posts.forEach(p => {
+      if (!p.timestamp) return;
+      const month = p.timestamp.substring(0, 7); // YYYY-MM
+      if (!month.startsWith(String(year))) return;
+      if (!agg[month]) {
+        agg[month] = { reach: 0, engagement: 0, count: 0, likes: 0, comments: 0, saves: 0, shares: 0 };
       }
-      monthlyAgg2026[month].followers = d.followers_count || monthlyAgg2026[month].followers;
-      monthlyAgg2026[month].reach += d.reach || 0;
-      monthlyAgg2026[month].count++;
+      agg[month].reach += p.reach || 0;
+      agg[month].engagement += p.engagement_rate || 0;
+      agg[month].likes += p.like_count || 0;
+      agg[month].comments += p.comments_count || 0;
+      agg[month].saves += p.saved || 0;
+      agg[month].shares += p.shares || 0;
+      agg[month].count++;
     });
+    return agg;
+  }
 
-    const monthKeys2026 = ['2026-03', '2026-04', '2026-05', '2026-06', '2026-07', '2026-08', '2026-09', '2026-10', '2026-11', '2026-12'];
-    const followers2026 = monthKeys2026.map(m => monthlyAgg2026[m]?.followers || null);
-    const reach2026 = monthKeys2026.map(m => monthlyAgg2026[m]?.reach || null);
-    const engagement2026 = monthKeys2026.map(m => {
-      const agg = monthlyAgg2026[m];
-      return agg && agg.count > 0 ? agg.engagement / agg.count : null;
-    });
+  function renderComparativa() {
+    const months = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'];
+    const monthKeys = (year) => Array.from({ length: 12 }, (_, i) =>
+      `${year}-${String(i + 1).padStart(2, '0')}`
+    );
 
-    createComparisonChart('chart-compare-followers', months, followers2025, followers2026, '2025', '2026', { beginAtZero: false });
+    // Build data from posts for both years
+    const agg2025 = aggregatePostsByMonth(2025);
+    const agg2026 = aggregatePostsByMonth(2026);
+
+    const keys2025 = monthKeys(2025);
+    const keys2026 = monthKeys(2026);
+
+    const reach2025 = keys2025.map(m => agg2025[m]?.reach || null);
+    const reach2026 = keys2026.map(m => agg2026[m]?.reach || null);
+
+    const engagement2025 = keys2025.map(m =>
+      agg2025[m] && agg2025[m].count > 0 ? Math.round((agg2025[m].engagement / agg2025[m].count) * 100) / 100 : null
+    );
+    const engagement2026 = keys2026.map(m =>
+      agg2026[m] && agg2026[m].count > 0 ? Math.round((agg2026[m].engagement / agg2026[m].count) * 100) / 100 : null
+    );
+
+    const posts2025 = keys2025.map(m => agg2025[m]?.count || null);
+    const posts2026 = keys2026.map(m => agg2026[m]?.count || null);
+
+    // Render comparison charts
     createComparisonChart('chart-compare-reach', months, reach2025, reach2026, '2025', '2026');
     createComparisonChart('chart-compare-engagement', months, engagement2025, engagement2026, '2025', '2026', {
       yFormat: v => v + '%',
     });
+    createComparisonChart('chart-compare-posts', months, posts2025, posts2026, '2025', '2026');
 
-    // Ferias comparison table
-    renderFeriasTable();
-  }
-
-  function renderFeriasTable() {
-    const tbody = document.getElementById('compare-table-body');
-    if (!tbody || !historicalData) return;
-
-    const ferias = historicalData.ferias || [];
-    tbody.innerHTML = ferias.map(f => `
-      <tr>
-        <td>${f.name || '--'}</td>
-        <td>${formatDate(f.date)}</td>
-        <td>${formatNumber(f.followers_at_event)}</td>
-        <td>${formatNumber(f.reach_week_before)}</td>
-        <td>${f.engagement_rate != null ? formatPercent(f.engagement_rate) : '--'}</td>
-        <td>${formatNumber(f.new_followers_week)}</td>
-      </tr>
-    `).join('');
-
-    if (ferias.length === 0) {
-      tbody.innerHTML = '<tr><td colspan="6" class="no-data">Completá historical.json con datos de ferias 2025</td></tr>';
-    }
   }
 
   // --- Posts ---
+  let postsSortCol = 'date';
+  let postsSortAsc = false; // default descending (newest first)
+  let allPosts = [];
+
   function renderPosts() {
     const tbody = document.getElementById('posts-table-body');
     if (!tbody) return;
 
     if (!postsData || !postsData.posts || postsData.posts.length === 0) {
       tbody.innerHTML = '<tr><td colspan="9" class="no-data">Cargando datos de posts...</td></tr>';
-      setupPostFilters([]);
       return;
     }
 
-    const posts = postsData.posts;
-    setupPostFilters(posts);
-    renderPostsTable(posts);
+    allPosts = postsData.posts;
+    setupPostFilters();
+    renderPostsTable();
   }
 
-  function renderPostsTable(posts) {
+  function getFilteredPosts() {
+    let filtered = allPosts.slice();
+
+    // Type filter
+    const typeFilter = document.getElementById('filter-type');
+    if (typeFilter && typeFilter.value !== 'all') {
+      filtered = filtered.filter(p => p.media_type === typeFilter.value);
+    }
+
+    // Date range filter
+    const fromEl = document.getElementById('filter-date-from');
+    const toEl = document.getElementById('filter-date-to');
+    if (fromEl && fromEl.value) {
+      const from = new Date(fromEl.value + 'T00:00:00');
+      filtered = filtered.filter(p => p.timestamp && new Date(p.timestamp) >= from);
+    }
+    if (toEl && toEl.value) {
+      const to = new Date(toEl.value + 'T23:59:59');
+      filtered = filtered.filter(p => p.timestamp && new Date(p.timestamp) <= to);
+    }
+
+    return filtered;
+  }
+
+  function sortPosts(posts) {
+    const dir = postsSortAsc ? 1 : -1;
+    const sortFns = {
+      date: (a, b) => dir * (a.timestamp || '').localeCompare(b.timestamp || ''),
+      reach: (a, b) => dir * ((a.reach || 0) - (b.reach || 0)),
+      likes: (a, b) => dir * ((a.like_count || 0) - (b.like_count || 0)),
+      comments: (a, b) => dir * ((a.comments_count || 0) - (b.comments_count || 0)),
+      saves: (a, b) => dir * ((a.saved || 0) - (b.saved || 0)),
+      shares: (a, b) => dir * ((a.shares || 0) - (b.shares || 0)),
+      engagement: (a, b) => dir * ((a.engagement_rate || 0) - (b.engagement_rate || 0)),
+    };
+    posts.sort(sortFns[postsSortCol] || sortFns.date);
+    return posts;
+  }
+
+  function updateSortArrows() {
+    document.querySelectorAll('#posts-table th.sortable').forEach(th => {
+      const arrow = th.querySelector('.sort-arrow');
+      if (!arrow) return;
+      if (th.dataset.sort === postsSortCol) {
+        arrow.textContent = postsSortAsc ? '\u25B2' : '\u25BC';
+      } else {
+        arrow.textContent = '';
+      }
+    });
+  }
+
+  function renderPostsTable() {
     const tbody = document.getElementById('posts-table-body');
     if (!tbody) return;
 
-    const typeFilter = document.getElementById('filter-type').value;
-    const sortBy = document.getElementById('filter-sort').value;
+    let filtered = getFilteredPosts();
+    filtered = sortPosts(filtered);
+    updateSortArrows();
 
-    let filtered = posts;
-    if (typeFilter !== 'all') {
-      filtered = filtered.filter(p => p.media_type === typeFilter);
+    if (filtered.length === 0) {
+      tbody.innerHTML = '<tr><td colspan="9" class="no-data">No hay posts en este rango</td></tr>';
+      return;
     }
-
-    const sortFns = {
-      date: (a, b) => (b.timestamp || '').localeCompare(a.timestamp || ''),
-      reach: (a, b) => (b.reach || 0) - (a.reach || 0),
-      engagement: (a, b) => (b.engagement_rate || 0) - (a.engagement_rate || 0),
-      saves: (a, b) => (b.saved || 0) - (a.saved || 0),
-    };
-    filtered.sort(sortFns[sortBy] || sortFns.date);
 
     tbody.innerHTML = filtered.map(p => {
       const badgeClass = p.media_type === 'IMAGE' ? 'badge-image' :
@@ -344,14 +421,36 @@
     }).join('');
   }
 
-  function setupPostFilters(posts) {
+  function setupPostFilters() {
     const typeFilter = document.getElementById('filter-type');
-    const sortFilter = document.getElementById('filter-sort');
-    if (!typeFilter || !sortFilter) return;
+    const fromEl = document.getElementById('filter-date-from');
+    const toEl = document.getElementById('filter-date-to');
+    const clearBtn = document.getElementById('filter-date-clear');
 
-    const handler = () => renderPostsTable(posts);
-    typeFilter.addEventListener('change', handler);
-    sortFilter.addEventListener('change', handler);
+    if (typeFilter) typeFilter.addEventListener('change', renderPostsTable);
+    if (fromEl) fromEl.addEventListener('change', renderPostsTable);
+    if (toEl) toEl.addEventListener('change', renderPostsTable);
+    if (clearBtn) {
+      clearBtn.addEventListener('click', () => {
+        if (fromEl) fromEl.value = '';
+        if (toEl) toEl.value = '';
+        renderPostsTable();
+      });
+    }
+
+    // Column header sorting
+    document.querySelectorAll('#posts-table th.sortable').forEach(th => {
+      th.addEventListener('click', () => {
+        const col = th.dataset.sort;
+        if (postsSortCol === col) {
+          postsSortAsc = !postsSortAsc;
+        } else {
+          postsSortCol = col;
+          postsSortAsc = false;
+        }
+        renderPostsTable();
+      });
+    });
   }
 
   // --- Pre-Feria ---
@@ -405,11 +504,17 @@
       setKPI('preferia-new-followers', formatNumber(newF));
     }
 
-    // Average engagement
-    const engagements = last14.filter(d => d.engagement_rate != null).map(d => d.engagement_rate);
-    if (engagements.length > 0) {
-      const avg = engagements.reduce((a, b) => a + b, 0) / engagements.length;
-      setKPI('preferia-engagement', formatPercent(avg));
+    // Average engagement from posts in last 14 days
+    if (postsData && postsData.posts) {
+      const twoWeeksAgo = new Date();
+      twoWeeksAgo.setDate(twoWeeksAgo.getDate() - 14);
+      const recentPosts = postsData.posts.filter(p =>
+        p.timestamp && new Date(p.timestamp) >= twoWeeksAgo && p.engagement_rate != null
+      );
+      if (recentPosts.length > 0) {
+        const avg = recentPosts.reduce((sum, p) => sum + p.engagement_rate, 0) / recentPosts.length;
+        setKPI('preferia-engagement', formatPercent(avg));
+      }
     }
 
     // Posts count from postsData in last 14 days

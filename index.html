@@ -21,40 +21,40 @@
     <button class="nav-btn active" data-view="overview">Overview</button>
     <button class="nav-btn" data-view="comparativa">2025 vs 2026</button>
     <button class="nav-btn" data-view="posts">Posts</button>
-    <button class="nav-btn" data-view="preferia">Pre-Feria</button>
+    <button class="nav-btn" data-view="preferia">Pre-Feria 10/5</button>
   </nav>
 
   <main>
     <!-- Overview -->
     <section id="view-overview" class="view active">
       <div class="kpi-grid">
-        <div class="kpi-card">
-          <span class="kpi-label">Seguidores</span>
+        <div class="kpi-card" title="Total de cuentas que siguen a @feriaemprendedoressucovi. Se actualiza diariamente.">
+          <span class="kpi-label">Seguidores <span class="info-icon">i</span></span>
           <span class="kpi-value" id="kpi-followers">--</span>
           <span class="kpi-delta" id="kpi-followers-delta"></span>
         </div>
-        <div class="kpi-card">
-          <span class="kpi-label">Alcance (7d)</span>
+        <div class="kpi-card" title="Cantidad de cuentas unicas que vieron cualquier contenido (posts, stories, reels) en los ultimos 7 dias.">
+          <span class="kpi-label">Alcance (7d) <span class="info-icon">i</span></span>
           <span class="kpi-value" id="kpi-reach">--</span>
           <span class="kpi-delta" id="kpi-reach-delta"></span>
         </div>
-        <div class="kpi-card">
-          <span class="kpi-label">Cuentas activas (7d)</span>
+        <div class="kpi-card" title="Cuentas que interactuaron con el contenido (likes, comentarios, guardados, shares) en los ultimos 7 dias.">
+          <span class="kpi-label">Cuentas activas (7d) <span class="info-icon">i</span></span>
           <span class="kpi-value" id="kpi-engaged">--</span>
           <span class="kpi-delta" id="kpi-engaged-delta"></span>
         </div>
-        <div class="kpi-card">
-          <span class="kpi-label">Engagement Rate</span>
+        <div class="kpi-card" title="Promedio de interacciones (likes + comentarios + guardados + shares) dividido por el alcance de cada post. Mientras mas alto, mejor conecta el contenido con la audiencia.">
+          <span class="kpi-label">Engagement Rate <span class="info-icon">i</span></span>
           <span class="kpi-value" id="kpi-engagement">--</span>
           <span class="kpi-delta" id="kpi-engagement-delta"></span>
         </div>
-        <div class="kpi-card">
-          <span class="kpi-label">Visitas al perfil (7d)</span>
+        <div class="kpi-card" title="Cantidad de veces que usuarios visitaron el perfil de @feriaemprendedoressucovi en los ultimos 7 dias.">
+          <span class="kpi-label">Visitas al perfil (7d) <span class="info-icon">i</span></span>
           <span class="kpi-value" id="kpi-profile-views">--</span>
           <span class="kpi-delta" id="kpi-profile-views-delta"></span>
         </div>
-        <div class="kpi-card">
-          <span class="kpi-label">Nuevos seguidores (7d)</span>
+        <div class="kpi-card" title="Diferencia neta de seguidores en los ultimos 7 dias. El porcentaje compara con los 7 dias anteriores.">
+          <span class="kpi-label">Nuevos seguidores (7d) <span class="info-icon">i</span></span>
           <span class="kpi-value" id="kpi-new-followers">--</span>
           <span class="kpi-delta" id="kpi-new-followers-delta"></span>
         </div>
@@ -85,33 +85,17 @@
       <h2>Comparativa 2025 vs 2026</h2>
       <div class="charts-grid">
         <div class="chart-container wide">
-          <h3>Seguidores por mes</h3>
-          <canvas id="chart-compare-followers"></canvas>
-        </div>
-        <div class="chart-container wide">
-          <h3>Alcance por mes</h3>
+          <h3>Alcance total por mes</h3>
           <canvas id="chart-compare-reach"></canvas>
         </div>
         <div class="chart-container wide">
-          <h3>Engagement por mes</h3>
+          <h3>Engagement promedio por mes</h3>
           <canvas id="chart-compare-engagement"></canvas>
         </div>
-      </div>
-      <div class="compare-table-container">
-        <h3>Resumen por feria</h3>
-        <table id="compare-table" class="data-table">
-          <thead>
-            <tr>
-              <th>Feria</th>
-              <th>Fecha</th>
-              <th>Seguidores</th>
-              <th>Reach (semana previa)</th>
-              <th>Engagement</th>
-              <th>Nuevos seguidores</th>
-            </tr>
-          </thead>
-          <tbody id="compare-table-body"></tbody>
-        </table>
+        <div class="chart-container wide">
+          <h3>Posts publicados por mes</h3>
+          <canvas id="chart-compare-posts"></canvas>
+        </div>
       </div>
     </section>
 
@@ -125,25 +109,22 @@
           <option value="VIDEO">Video / Reel</option>
           <option value="CAROUSEL_ALBUM">Carousel</option>
         </select>
-        <select id="filter-sort">
-          <option value="date">Más recientes</option>
-          <option value="reach">Mayor alcance</option>
-          <option value="engagement">Mayor engagement</option>
-          <option value="saves">Más guardados</option>
-        </select>
+        <input type="date" id="filter-date-from" title="Desde">
+        <input type="date" id="filter-date-to" title="Hasta">
+        <button id="filter-date-clear" class="nav-btn" style="padding:0.5rem 1rem;font-size:0.85rem;border:1px solid var(--border);border-radius:8px;">Limpiar fechas</button>
       </div>
       <table id="posts-table" class="data-table">
         <thead>
           <tr>
-            <th>Fecha</th>
+            <th class="sortable" data-sort="date">Fecha <span class="sort-arrow"></span></th>
             <th>Tipo</th>
             <th>Caption</th>
-            <th>Alcance</th>
-            <th>Likes</th>
-            <th>Comentarios</th>
-            <th>Guardados</th>
-            <th>Shares</th>
-            <th>Engagement</th>
+            <th class="sortable" data-sort="reach">Alcance <span class="sort-arrow"></span></th>
+            <th class="sortable" data-sort="likes">Likes <span class="sort-arrow"></span></th>
+            <th class="sortable" data-sort="comments">Comentarios <span class="sort-arrow"></span></th>
+            <th class="sortable" data-sort="saves">Guardados <span class="sort-arrow"></span></th>
+            <th class="sortable" data-sort="shares">Shares <span class="sort-arrow"></span></th>
+            <th class="sortable" data-sort="engagement">Engagement <span class="sort-arrow"></span></th>
           </tr>
         </thead>
         <tbody id="posts-table-body"></tbody>
@@ -152,7 +133,7 @@
 
     <!-- Pre-Feria -->
     <section id="view-preferia" class="view">
-      <h2>Pre-Feria</h2>
+      <h2>Pre-Feria 10/5</h2>
       <div class="countdown-container" id="countdown-container">
         <div class="countdown-label">Próxima feria en</div>
         <div class="countdown" id="countdown">--</div>

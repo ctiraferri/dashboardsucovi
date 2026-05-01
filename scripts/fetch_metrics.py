@@ -51,6 +51,23 @@ def api_get(endpoint, params=None):
         sys.exit(1)
 
 
+
+def api_get_url(url):
+    """Make a GET request to a full URL (used for pagination links)."""
+    req = Request(url, headers={"User-Agent": "SucoviDashboard/1.0"})
+
+    try:
+        with urlopen(req) as response:
+            return json.loads(response.read().decode())
+    except HTTPError as e:
+        body = e.read().decode()
+        print(f"API Error {e.code}: {body}")
+        raise
+    except URLError as e:
+        print(f"Network error: {e.reason}")
+        sys.exit(1)
+
+
 def get_account_info(user_id):
     """Get basic account information."""
     data = api_get(f"/{user_id}", {
@@ -77,15 +94,47 @@ def get_account_insights(user_id):
     return result
 
 
-def get_recent_media(user_id, limit=25):
-    """Get recent media with per-post insights."""
+def get_recent_media(user_id, limit=100, max_posts=None):
+    """Get all media with per-post insights, paginating through all results.
+
+    Args:
+        user_id: Instagram user ID.
+        limit: Number of posts per page (max 100).
+        max_posts: Optional cap on total posts to fetch. None means fetch all.
+    """
+    all_items = []
+    page = 1
+
+    # First page
+    print(f"     Page {page}: fetching up to {limit} posts...")
     media_data = api_get(f"/{user_id}/media", {
         "fields": "id,caption,media_type,timestamp,permalink,like_count,comments_count",
         "limit": str(limit),
     })
 
+    all_items.extend(media_data.get("data", []))
+
+    # Follow paging.next cursor until exhausted or max_posts reached
+    while True:
+        next_url = media_data.get("paging", {}).get("next")
+        if not next_url:
+            break
+        if max_posts is not None and len(all_items) >= max_posts:
+            all_items = all_items[:max_posts]
+            break
+
+        page += 1
+        print(f"     Page {page}: fetching next batch ({len(all_items)} posts so far)...")
+        media_data = api_get_url(next_url)
+        all_items.extend(media_data.get("data", []))
+
+    if max_posts is not None:
+        all_items = all_items[:max_posts]
+
+    print(f"     Total posts found: {len(all_items)}")
+
     posts = []
-    for item in media_data.get("data", []):
+    for idx, item in enumerate(all_items, 1):
         post = {
             "id": item["id"],
             "caption": item.get("caption", ""),
