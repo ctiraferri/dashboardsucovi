@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-05-10T09:18:10.794192+00:00",
+  "last_updated": "2026-05-11T10:50:13.669017+00:00",
   "posts": [
     {
       "id": "18438963367187747",
@@ -7,14 +7,14 @@
       "media_type": "VIDEO",
       "timestamp": "2026-05-09T15:52:54+0000",
       "permalink": "https://www.instagram.com/reel/DYH5zHyRlHG/",
-      "like_count": 79,
-      "comments_count": 0,
-      "reach": 3072,
-      "saved": 10,
-      "likes": 79,
-      "comments": 0,
-      "shares": 62,
-      "engagement_rate": 4.92
+      "like_count": 85,
+      "comments_count": 4,
+      "reach": 3672,
+      "saved": 11,
+      "likes": 85,
+      "comments": 4,
+      "shares": 66,
+      "engagement_rate": 4.52
     },
     {
       "id": "18096484874110566",
@@ -22,14 +22,14 @@
       "media_type": "VIDEO",
       "timestamp": "2026-05-08T12:28:54+0000",
       "permalink": "https://www.instagram.com/reel/DYE99WRR8e2/",
-      "like_count": 131,
+      "like_count": 138,
       "comments_count": 27,
-      "reach": 3197,
+      "reach": 3543,
       "saved": 4,
-      "likes": 131,
+      "likes": 138,
       "comments": 27,
-      "shares": 54,
-      "engagement_rate": 6.76
+      "shares": 59,
+      "engagement_rate": 6.44
     },
     {
       "id": "18064508417384059",
@@ -37,14 +37,14 @@
       "media_type": "CAROUSEL_ALBUM",
       "timestamp": "2026-05-07T13:09:38+0000",
       "permalink": "https://www.instagram.com/p/DYCeGTjEZyX/",
-      "like_count": 67,
+      "like_count": 68,
       "comments_count": 9,
-      "reach": 1953,
+      "reach": 2115,
       "saved": 0,
-      "likes": 67,
+      "likes": 68,
       "comments": 9,
-      "shares": 10,
-      "engagement_rate": 4.4
+      "shares": 11,
+      "engagement_rate": 4.16
     },
     {
       "id": "18081280538545178",
@@ -52,14 +52,14 @@
       "media_type": "VIDEO",
       "timestamp": "2026-05-06T14:40:11+0000",
       "permalink": "https://www.instagram.com/reel/DYADZvjRLRY/",
-      "like_count": 51,
+      "like_count": 52,
       "comments_count": 6,
-      "reach": 1591,
+      "reach": 1670,
       "saved": 1,
-      "likes": 51,
+      "likes": 52,
       "comments": 6,
       "shares": 23,
-      "engagement_rate": 5.09
+      "engagement_rate": 4.91
     },
     {
       "id": "17884539423540695",
@@ -67,14 +67,14 @@
       "media_type": "VIDEO",
       "timestamp": "2026-05-05T23:26:59+0000",
       "permalink": "https://www.instagram.com/reel/DX-a2y6seyI/",
-      "like_count": 95,
+      "like_count": 98,
       "comments_count": 17,
-      "reach": 2971,
+      "reach": 3076,
       "saved": 3,
-      "likes": 95,
+      "likes": 98,
       "comments": 17,
-      "shares": 37,
-      "engagement_rate": 5.12
+      "shares": 38,
+      "engagement_rate": 5.07
     },
     {
       "id": "18095253083175183",
@@ -82,14 +82,14 @@
       "media_type": "VIDEO",
       "timestamp": "2026-05-05T13:28:51+0000",
       "permalink": "https://www.instagram.com/reel/DX9WY2gxTsh/",
-      "like_count": 178,
+      "like_count": 181,
       "comments_count": 9,
-      "reach": 4795,
+      "reach": 4924,
       "saved": 9,
-      "likes": 178,
+      "likes": 181,
       "comments": 9,
-      "shares": 63,
-      "engagement_rate": 5.4
+      "shares": 65,
+      "engagement_rate": 5.36
     },
     {
       "id": "18111558835844346",
@@ -97,14 +97,14 @@
       "media_type": "VIDEO",
       "timestamp": "2026-05-04T15:42:46+0000",
       "permalink": "https://www.instagram.com/reel/DX7AfqGxorT/",
-      "like_count": 85,
-      "comments_count": 7,
-      "reach": 3225,
+      "like_count": 87,
+      "comments_count": 9,
+      "reach": 3329,
       "saved": 5,
-      "likes": 85,
-      "comments": 7,
+      "likes": 87,
+      "comments": 9,
       "shares": 42,
-      "engagement_rate": 4.31
+      "engagement_rate": 4.3
     },
     {
       "id": "17883653778514956",
@@ -112,14 +112,14 @@
       "media_type": "VIDEO",
       "timestamp": "2026-04-30T13:03:58+0000",
       "permalink": "https://www.instagram.com/reel/DXwbmflRiw5/",
-      "like_count": 163,
+      "like_count": 166,
       "comments_count": 15,
-      "reach": 3076,
+      "reach": 3178,
       "saved": 1,
-      "likes": 163,
+      "likes": 166,
       "comments": 15,
       "shares": 24,
-      "engagement_rate": 6.6
+      "engagement_rate": 6.48
     },
     {
       "id": "17998886138924124",
@@ -127,13 +127,13 @@
       "media_type": "VIDEO",
       "timestamp": "2026-04-28T21:26:59+0000",
       "permalink": "https://www.instagram.com/reel/DXsLGqskVa0/",
-      "like_count": 237,
+      "like_count": 239,
       "comments_count": 21,
-      "reach": 6274,
+      "reach": 6323,
       "saved": 16,
-      "likes": 237,
+      "likes": 239,
       "comments": 21,
-      "shares": 69,
+      "shares": 70,
       "engagement_rate": 5.47
     },
     {
@@ -144,12 +144,12 @@
       "permalink": "https://www.instagram.com/reel/DXO_yWXEY2h/",
       "like_count": 118,
       "comments_count": 87,
-      "reach": 4267,
+      "reach": 4291,
       "saved": 20,
       "likes": 118,
       "comments": 87,
       "shares": 41,
-      "engagement_rate": 6.23
+      "engagement_rate": 6.2
     },
     {
       "id": "18029377514803539",
@@ -159,12 +159,12 @@
       "permalink": "https://www.instagram.com/reel/DXKrKQjkd8C/",
       "like_count": 164,
       "comments_count": 13,
-      "reach": 3001,
+      "reach": 3014,
       "saved": 2,
       "likes": 164,
       "comments": 13,
       "shares": 24,
-      "engagement_rate": 6.76
+      "engagement_rate": 6.74
     },
     {
       "id": "18099540730981485",
@@ -174,12 +174,12 @@
       "permalink": "https://www.instagram.com/reel/DXGBhXkjFHx/",
       "like_count": 133,
       "comments_count": 8,
-      "reach": 3340,
+      "reach": 3360,
       "saved": 1,
       "likes": 133,
       "comments": 8,
       "shares": 21,
-      "engagement_rate": 4.88
+      "engagement_rate": 4.85
     },
     {
       "id": "18106137544705829",
@@ -189,12 +189,12 @@
       "permalink": "https://www.instagram.com/reel/DXCn8KmEWP8/",
       "like_count": 173,
       "comments_count": 14,
-      "reach": 3345,
+      "reach": 3360,
       "saved": 4,
       "likes": 173,
       "comments": 14,
       "shares": 24,
-      "engagement_rate": 6.43
+      "engagement_rate": 6.4
     },
     {
       "id": "17932618197231468",
@@ -204,12 +204,12 @@
       "permalink": "https://www.instagram.com/p/DXAxz5WjFnM/",
       "like_count": 147,
       "comments_count": 33,
-      "reach": 3182,
+      "reach": 3192,
       "saved": 6,
       "likes": 147,
       "comments": 33,
       "shares": 24,
-      "engagement_rate": 6.6
+      "engagement_rate": 6.58
     },
     {
       "id": "18076408289536439",
@@ -219,12 +219,12 @@
       "permalink": "https://www.instagram.com/reel/DW_eQkckYgO/",
       "like_count": 142,
       "comments_count": 8,
-      "reach": 4626,
+      "reach": 4635,
       "saved": 6,
       "likes": 142,
       "comments": 8,
       "shares": 62,
-      "engagement_rate": 4.71
+      "engagement_rate": 4.7
     },
     {
       "id": "18060393047424539",
@@ -232,11 +232,11 @@
       "media_type": "VIDEO",
       "timestamp": "2026-04-10T12:09:35+0000",
       "permalink": "https://www.instagram.com/reel/DW8yEazkeAh/",
-      "like_count": 208,
+      "like_count": 209,
       "comments_count": 21,
-      "reach": 5890,
+      "reach": 5908,
       "saved": 9,
-      "likes": 208,
+      "likes": 209,
       "comments": 21,
       "shares": 106,
       "engagement_rate": 5.84
@@ -249,12 +249,12 @@
       "permalink": "https://www.instagram.com/reel/DW2E5yAEXbZ/",
       "like_count": 162,
       "comments_count": 21,
-      "reach": 4417,
+      "reach": 4434,
       "saved": 15,
       "likes": 162,
       "comments": 21,
       "shares": 62,
-      "engagement_rate": 5.89
+      "engagement_rate": 5.86
     },
     {
       "id": "18094685354322017",
@@ -264,12 +264,12 @@
       "permalink": "https://www.instagram.com/reel/DWoXSPbkX0Y/",
       "like_count": 240,
       "comments_count": 14,
-      "reach": 4902,
+      "reach": 4946,
       "saved": 15,
       "likes": 240,
       "comments": 14,
       "shares": 49,
-      "engagement_rate": 6.49
+      "engagement_rate": 6.43
     },
     {
       "id": "18004496630719983",
@@ -279,12 +279,12 @@
       "permalink": "https://www.instagram.com/reel/DWRZ3xTkSBi/",
       "like_count": 218,
       "comments_count": 16,
-      "reach": 4127,
+      "reach": 4142,
       "saved": 9,
       "likes": 218,
       "comments": 16,
       "shares": 60,
-      "engagement_rate": 7.34
+      "engagement_rate": 7.32
     },
     {
       "id": "17874895911438129",
@@ -292,11 +292,11 @@
       "media_type": "VIDEO",
       "timestamp": "2026-03-19T21:26:30+0000",
       "permalink": "https://www.instagram.com/reel/DWFLH-NDz9H/",
-      "like_count": 103,
+      "like_count": 104,
       "comments_count": 9,
-      "reach": 2556,
+      "reach": 2573,
       "saved": 2,
-      "likes": 103,
+      "likes": 104,
       "comments": 9,
       "shares": 34,
       "engagement_rate": 5.79
@@ -309,12 +309,12 @@
       "permalink": "https://www.instagram.com/p/DV0yWW8kROY/",
       "like_count": 361,
       "comments_count": 481,
-      "reach": 13080,
+      "reach": 13095,
       "saved": 65,
       "likes": 361,
       "comments": 481,
       "shares": 148,
-      "engagement_rate": 8.07
+      "engagement_rate": 8.06
     },
     {
       "id": "18122223274594020",
@@ -324,12 +324,12 @@
       "permalink": "https://www.instagram.com/reel/DVop-v5ka8P/",
       "like_count": 118,
       "comments_count": 5,
-      "reach": 2552,
+      "reach": 2566,
       "saved": 4,
       "likes": 118,
       "comments": 5,
       "shares": 13,
-      "engagement_rate": 5.49
+      "engagement_rate": 5.46
     },
     {
       "id": "17968379949001417",
@@ -339,12 +339,12 @@
       "permalink": "https://www.instagram.com/reel/DVny4PtkYIw/",
       "like_count": 253,
       "comments_count": 33,
-      "reach": 3954,
+      "reach": 3961,
       "saved": 2,
       "likes": 253,
       "comments": 33,
       "shares": 18,
-      "engagement_rate": 7.74
+      "engagement_rate": 7.73
     },
     {
       "id": "18057316391390980",
@@ -354,12 +354,12 @@
       "permalink": "https://www.instagram.com/p/DVEt7r6kbXl/",
       "like_count": 202,
       "comments_count": 85,
-      "reach": 6113,
+      "reach": 6128,
       "saved": 13,
       "likes": 202,
       "comments": 85,
       "shares": 103,
-      "engagement_rate": 6.59
+      "engagement_rate": 6.58
     },
     {
       "id": "18151821031425900",
@@ -369,12 +369,12 @@
       "permalink": "https://www.instagram.com/reel/DS8S3l7ERg3/",
       "like_count": 97,
       "comments_count": 15,
-      "reach": 2161,
+      "reach": 2167,
       "saved": 1,
       "likes": 97,
       "comments": 15,
       "shares": 6,
-      "engagement_rate": 5.51
+      "engagement_rate": 5.49
     },
     {
       "id": "18387104311195097",
@@ -384,12 +384,12 @@
       "permalink": "https://www.instagram.com/p/DSqh_wZD1zN/",
       "like_count": 82,
       "comments_count": 10,
-      "reach": 1695,
+      "reach": 1702,
       "saved": 0,
       "likes": 82,
       "comments": 10,
       "shares": 3,
-      "engagement_rate": 5.6
+      "engagement_rate": 5.58
     },
     {
       "id": "18091306970490557",
@@ -399,7 +399,7 @@
       "permalink": "https://www.instagram.com/p/DSfaAHrEeSB/",
       "like_count": 96,
       "comments_count": 31,
-      "reach": 5189,
+      "reach": 5193,
       "saved": 10,
       "likes": 96,
       "comments": 31,
@@ -429,12 +429,12 @@
       "permalink": "https://www.instagram.com/p/DSZ5IRfEa_W/",
       "like_count": 67,
       "comments_count": 32,
-      "reach": 2273,
+      "reach": 2282,
       "saved": 4,
       "likes": 67,
       "comments": 32,
       "shares": 19,
-      "engagement_rate": 5.37
+      "engagement_rate": 5.35
     },
     {
       "id": "17859161112564819",
@@ -444,7 +444,7 @@
       "permalink": "https://www.instagram.com/p/DSU_xfQkYvc/",
       "like_count": 80,
       "comments_count": 20,
-      "reach": 3058,
+      "reach": 3063,
       "saved": 4,
       "likes": 80,
       "comments": 20,
@@ -459,12 +459,12 @@
       "permalink": "https://www.instagram.com/p/DSLn_uzEYJI/",
       "like_count": 90,
       "comments_count": 9,
-      "reach": 5049,
+      "reach": 5123,
       "saved": 2,
       "likes": 90,
       "comments": 9,
       "shares": 28,
-      "engagement_rate": 2.55
+      "engagement_rate": 2.52
     },
     {
       "id": "18547580785056842",
@@ -474,12 +474,12 @@
       "permalink": "https://www.instagram.com/p/DSBX4NOjFEK/",
       "like_count": 134,
       "comments_count": 89,
-      "reach": 3515,
+      "reach": 3527,
       "saved": 8,
       "likes": 134,
       "comments": 89,
       "shares": 44,
-      "engagement_rate": 7.82
+      "engagement_rate": 7.8
     },
     {
       "id": "18062961815218107",
@@ -489,12 +489,12 @@
       "permalink": "https://www.instagram.com/reel/DR8H29nkTuL/",
       "like_count": 68,
       "comments_count": 26,
-      "reach": 2980,
+      "reach": 2984,
       "saved": 0,
       "likes": 68,
       "comments": 26,
       "shares": 21,
-      "engagement_rate": 3.86
+      "engagement_rate": 3.85
     },
     {
       "id": "17950306268915476",
@@ -504,12 +504,12 @@
       "permalink": "https://www.instagram.com/reel/DRyJWPhDOtn/",
       "like_count": 199,
       "comments_count": 51,
-      "reach": 5263,
+      "reach": 5267,
       "saved": 32,
       "likes": 199,
       "comments": 51,
       "shares": 90,
-      "engagement_rate": 7.07
+      "engagement_rate": 7.06
     },
     {
       "id": "18084631181030467",
@@ -519,12 +519,12 @@
       "permalink": "https://www.instagram.com/reel/DRvRRuKETHN/",
       "like_count": 107,
       "comments_count": 69,
-      "reach": 2594,
+      "reach": 2605,
       "saved": 2,
       "likes": 107,
       "comments": 69,
       "shares": 31,
-      "engagement_rate": 8.06
+      "engagement_rate": 8.02
     },
     {
       "id": "17867515107482946",
@@ -534,12 +534,12 @@
       "permalink": "https://www.instagram.com/reel/DRdVWvdjLPe/",
       "like_count": 117,
       "comments_count": 33,
-      "reach": 3795,
+      "reach": 3802,
       "saved": 8,
       "likes": 117,
       "comments": 33,
       "shares": 41,
-      "engagement_rate": 5.24
+      "engagement_rate": 5.23
     },
     {
       "id": "18138970861458128",
@@ -549,12 +549,12 @@
       "permalink": "https://www.instagram.com/p/DRNovp5ESYh/",
       "like_count": 130,
       "comments_count": 177,
-      "reach": 4785,
+      "reach": 4795,
       "saved": 13,
       "likes": 130,
       "comments": 177,
       "shares": 92,
-      "engagement_rate": 8.61
+      "engagement_rate": 8.59
     },
     {
       "id": "17998596782692117",
@@ -594,12 +594,12 @@
       "permalink": "https://www.instagram.com/p/DQ5chJ7DIyq/",
       "like_count": 115,
       "comments_count": 55,
-      "reach": 2967,
+      "reach": 2971,
       "saved": 7,
       "likes": 115,
       "comments": 55,
       "shares": 34,
-      "engagement_rate": 7.11
+      "engagement_rate": 7.1
     },
     {
       "id": "18128072044495479",
@@ -609,12 +609,12 @@
       "permalink": "https://www.instagram.com/reel/DQ14oXYEeZJ/",
       "like_count": 245,
       "comments_count": 42,
-      "reach": 4374,
+      "reach": 4382,
       "saved": 6,
       "likes": 245,
       "comments": 42,
       "shares": 28,
-      "engagement_rate": 7.34
+      "engagement_rate": 7.33
     },
     {
       "id": "17883489048284593",
@@ -624,12 +624,12 @@
       "permalink": "https://www.instagram.com/reel/DQw-FQVEZiW/",
       "like_count": 132,
       "comments_count": 22,
-      "reach": 2780,
+      "reach": 2784,
       "saved": 2,
       "likes": 132,
       "comments": 22,
       "shares": 42,
-      "engagement_rate": 7.12
+      "engagement_rate": 7.11
     },
     {
       "id": "17875285188351214",
@@ -639,12 +639,12 @@
       "permalink": "https://www.instagram.com/reel/DQspUQODASF/",
       "like_count": 160,
       "comments_count": 33,
-      "reach": 3789,
+      "reach": 3795,
       "saved": 12,
       "likes": 160,
       "comments": 33,
       "shares": 46,
-      "engagement_rate": 6.62
+      "engagement_rate": 6.61
     },
     {
       "id": "18328414507212300",
@@ -652,14 +652,14 @@
       "media_type": "VIDEO",
       "timestamp": "2025-11-04T23:04:29+0000",
       "permalink": "https://www.instagram.com/reel/DQpvwveke-b/",
-      "like_count": 102,
+      "like_count": 103,
       "comments_count": 15,
-      "reach": 3201,
+      "reach": 3206,
       "saved": 8,
-      "likes": 102,
+      "likes": 103,
       "comments": 15,
       "shares": 33,
-      "engagement_rate": 4.94
+      "engagement_rate": 4.96
     },
     {
       "id": "18084343921823197",
@@ -699,12 +699,12 @@
       "permalink": "https://www.instagram.com/reel/DQeplyPEY-a/",
       "like_count": 159,
       "comments_count": 24,
-      "reach": 3624,
+      "reach": 3630,
       "saved": 14,
       "likes": 159,
       "comments": 24,
       "shares": 78,
-      "engagement_rate": 7.59
+      "engagement_rate": 7.58
     },
     {
       "id": "18117951340527891",
@@ -714,12 +714,12 @@
       "permalink": "https://www.instagram.com/reel/DQXkUrIESEp/",
       "like_count": 114,
       "comments_count": 27,
-      "reach": 2240,
+      "reach": 2243,
       "saved": 4,
       "likes": 114,
       "comments": 27,
       "shares": 15,
-      "engagement_rate": 7.14
+      "engagement_rate": 7.13
     },
     {
       "id": "18096187027823604",
@@ -729,12 +729,12 @@
       "permalink": "https://www.instagram.com/reel/DQUeFrHEXTQ/",
       "like_count": 102,
       "comments_count": 36,
-      "reach": 2118,
+      "reach": 2121,
       "saved": 2,
       "likes": 102,
       "comments": 36,
       "shares": 18,
-      "engagement_rate": 7.46
+      "engagement_rate": 7.45
     },
     {
       "id": "18534667894042109",
@@ -774,12 +774,12 @@
       "permalink": "https://www.instagram.com/p/DP_tadHDHCY/",
       "like_count": 48,
       "comments_count": 4,
-      "reach": 1262,
+      "reach": 1264,
       "saved": 0,
       "likes": 48,
       "comments": 4,
       "shares": 5,
-      "engagement_rate": 4.52
+      "engagement_rate": 4.51
     },
     {
       "id": "18107368693593595",
@@ -834,12 +834,12 @@
       "permalink": "https://www.instagram.com/reel/DPhhT2JkeDp/",
       "like_count": 128,
       "comments_count": 44,
-      "reach": 3726,
+      "reach": 3732,
       "saved": 8,
       "likes": 128,
       "comments": 44,
       "shares": 53,
-      "engagement_rate": 6.25
+      "engagement_rate": 6.24
     },
     {
       "id": "17921591841153211",
@@ -909,12 +909,12 @@
       "permalink": "https://www.instagram.com/reel/DPEdgbskRis/",
       "like_count": 88,
       "comments_count": 44,
-      "reach": 2322,
+      "reach": 2325,
       "saved": 9,
       "likes": 88,
       "comments": 44,
       "shares": 29,
-      "engagement_rate": 7.32
+      "engagement_rate": 7.31
     },
     {
       "id": "17869891281441416",
@@ -924,7 +924,7 @@
       "permalink": "https://www.instagram.com/reel/DO9DQuUEa7_/",
       "like_count": 63,
       "comments_count": 27,
-      "reach": 2017,
+      "reach": 2019,
       "saved": 2,
       "likes": 63,
       "comments": 27,
@@ -939,12 +939,12 @@
       "permalink": "https://www.instagram.com/reel/DOy3WvgDxKu/",
       "like_count": 153,
       "comments_count": 65,
-      "reach": 4551,
+      "reach": 4560,
       "saved": 3,
       "likes": 153,
       "comments": 65,
       "shares": 1,
-      "engagement_rate": 4.88
+      "engagement_rate": 4.87
     },
     {
       "id": "18368650033144830",
@@ -1029,7 +1029,7 @@
       "permalink": "https://www.instagram.com/reel/DOR2uNHiYG0/",
       "like_count": 214,
       "comments_count": 69,
-      "reach": 7478,
+      "reach": 7480,
       "saved": 13,
       "likes": 214,
       "comments": 69,
@@ -1103,13 +1103,13 @@
       "timestamp": "2025-08-12T12:59:15+0000",
       "permalink": "https://www.instagram.com/p/DNQX3tQR9ur/",
       "like_count": 235,
-      "comments_count": 311,
+      "comments_count": 310,
       "reach": 8030,
       "saved": 43,
       "likes": 235,
-      "comments": 311,
+      "comments": 310,
       "shares": 58,
-      "engagement_rate": 8.06
+      "engagement_rate": 8.04
     },
     {
       "id": "18323257537227811",
@@ -1149,12 +1149,12 @@
       "permalink": "https://www.instagram.com/reel/DNB7-3nMAoC/",
       "like_count": 158,
       "comments_count": 65,
-      "reach": 2803,
+      "reach": 2807,
       "saved": 7,
       "likes": 158,
       "comments": 65,
       "shares": 28,
-      "engagement_rate": 9.2
+      "engagement_rate": 9.19
     },
     {
       "id": "18034588523692876",
@@ -1164,12 +1164,12 @@
       "permalink": "https://www.instagram.com/reel/DM_gUmKsTWQ/",
       "like_count": 165,
       "comments_count": 42,
-      "reach": 3391,
+      "reach": 3397,
       "saved": 8,
       "likes": 165,
       "comments": 42,
       "shares": 41,
-      "engagement_rate": 7.55
+      "engagement_rate": 7.54
     },
     {
       "id": "17890871214298881",
@@ -1209,12 +1209,12 @@
       "permalink": "https://www.instagram.com/reel/DMyVFjZhzKd/",
       "like_count": 81,
       "comments_count": 31,
-      "reach": 2494,
+      "reach": 2501,
       "saved": 2,
       "likes": 81,
       "comments": 31,
       "shares": 20,
-      "engagement_rate": 5.37
+      "engagement_rate": 5.36
     },
     {
       "id": "17854066479496179",
@@ -1254,12 +1254,12 @@
       "permalink": "https://www.instagram.com/reel/DMKsbPIovDe/",
       "like_count": 99,
       "comments_count": 17,
-      "reach": 2535,
+      "reach": 2542,
       "saved": 2,
       "likes": 99,
       "comments": 17,
       "shares": 28,
-      "engagement_rate": 5.76
+      "engagement_rate": 5.74
     },
     {
       "id": "18110324506526273",
@@ -1269,7 +1269,7 @@
       "permalink": "https://www.instagram.com/reel/DMAsVa2o2St/",
       "like_count": 230,
       "comments_count": 61,
-      "reach": 6834,
+      "reach": 6836,
       "saved": 14,
       "likes": 230,
       "comments": 61,
@@ -1314,12 +1314,12 @@
       "permalink": "https://www.instagram.com/reel/DLn-c3EMeqS/",
       "like_count": 95,
       "comments_count": 29,
-      "reach": 3370,
+      "reach": 3376,
       "saved": 6,
       "likes": 95,
       "comments": 29,
       "shares": 18,
-      "engagement_rate": 4.39
+      "engagement_rate": 4.38
     },
     {
       "id": "18044753549545387",
@@ -1329,7 +1329,7 @@
       "permalink": "https://www.instagram.com/reel/DLkGXf5sNdt/",
       "like_count": 67,
       "comments_count": 16,
-      "reach": 2172,
+      "reach": 2175,
       "saved": 3,
       "likes": 67,
       "comments": 16,
@@ -1344,12 +1344,12 @@
       "permalink": "https://www.instagram.com/reel/DLfMs65sUvG/",
       "like_count": 311,
       "comments_count": 55,
-      "reach": 6756,
+      "reach": 6763,
       "saved": 11,
       "likes": 311,
       "comments": 55,
       "shares": 131,
-      "engagement_rate": 7.52
+      "engagement_rate": 7.51
     },
     {
       "id": "18012431753743333",
@@ -1554,7 +1554,7 @@
       "permalink": "https://www.instagram.com/reel/DKmTGWNsRFx/",
       "like_count": 40,
       "comments_count": 4,
-      "reach": 1364,
+      "reach": 1366,
       "saved": 1,
       "likes": 40,
       "comments": 4,
@@ -1717,14 +1717,14 @@
       "media_type": "VIDEO",
       "timestamp": "2025-05-22T15:05:21+0000",
       "permalink": "https://www.instagram.com/reel/DJ9cxYVRC0l/",
-      "like_count": 52,
+      "like_count": 51,
       "comments_count": 13,
       "reach": 1648,
       "saved": 0,
-      "likes": 52,
+      "likes": 51,
       "comments": 13,
       "shares": 4,
-      "engagement_rate": 4.19
+      "engagement_rate": 4.13
     },
     {
       "id": "18077853967837558",
@@ -1747,14 +1747,14 @@
       "media_type": "VIDEO",
       "timestamp": "2025-05-18T20:18:40+0000",
       "permalink": "https://www.instagram.com/reel/DJztWBBPOzY/",
-      "like_count": 216,
+      "like_count": 215,
       "comments_count": 63,
       "reach": 4451,
       "saved": 7,
-      "likes": 216,
+      "likes": 215,
       "comments": 63,
       "shares": 70,
-      "engagement_rate": 8.0
+      "engagement_rate": 7.98
     },
     {
       "id": "17849878845460062",
@@ -1792,14 +1792,14 @@
       "media_type": "VIDEO",
       "timestamp": "2025-05-08T20:49:58+0000",
       "permalink": "https://www.instagram.com/reel/DJaBN-Lvq4P/",
-      "like_count": 267,
+      "like_count": 266,
       "comments_count": 99,
       "reach": 4173,
       "saved": 13,
-      "likes": 267,
+      "likes": 266,
       "comments": 99,
       "shares": 77,
-      "engagement_rate": 10.93
+      "engagement_rate": 10.9
     },
     {
       "id": "18112617007489411",
@@ -1822,14 +1822,14 @@
       "media_type": "VIDEO",
       "timestamp": "2025-05-04T17:49:50+0000",
       "permalink": "https://www.instagram.com/reel/DJPZll_ReDK/",
-      "like_count": 61,
+      "like_count": 60,
       "comments_count": 18,
       "reach": 1732,
       "saved": 1,
-      "likes": 61,
+      "likes": 60,
       "comments": 18,
       "shares": 3,
-      "engagement_rate": 4.79
+      "engagement_rate": 4.73
     },
     {
       "id": "18269681764279395",
@@ -4104,12 +4104,12 @@
       "permalink": "https://www.instagram.com/p/C7hzlj0uSkr/",
       "like_count": 34,
       "comments_count": 5,
-      "reach": 658,
+      "reach": 660,
       "saved": 1,
       "likes": 34,
       "comments": 5,
       "shares": 2,
-      "engagement_rate": 6.38
+      "engagement_rate": 6.36
     },
     {
       "id": "18318749536180701",
@@ -4464,12 +4464,12 @@
       "permalink": "https://www.instagram.com/p/C6wQvqiOnQk/",
       "like_count": 23,
       "comments_count": 2,
-      "reach": 208,
+      "reach": 209,
       "saved": 0,
       "likes": 23,
       "comments": 2,
       "shares": 0,
-      "engagement_rate": 12.02
+      "engagement_rate": 11.96
     },
     {
       "id": "17923410278794258",
@@ -9414,12 +9414,12 @@
       "permalink": "https://www.instagram.com/p/B4sKdr1DgxS/",
       "like_count": 49,
       "comments_count": 2,
-      "reach": 36,
+      "reach": 37,
       "saved": 0,
       "likes": 49,
       "comments": 2,
       "shares": 0,
-      "engagement_rate": 141.67
+      "engagement_rate": 137.84
     },
     {
       "id": "17864111890545483",
@@ -10779,12 +10779,12 @@
       "permalink": "https://www.instagram.com/p/BycrJY9Hg9N/",
       "like_count": 27,
       "comments_count": 0,
-      "reach": 2,
+      "reach": 3,
       "saved": 0,
       "likes": 27,
       "comments": 0,
       "shares": 0,
-      "engagement_rate": 1350.0
+      "engagement_rate": 900.0
     },
     {
       "id": "17871549091383178",
@@ -11874,12 +11874,12 @@
       "permalink": "https://www.instagram.com/p/Bt7Lyatn57P/",
       "like_count": 53,
       "comments_count": 11,
-      "reach": 45,
+      "reach": 46,
       "saved": 2,
       "likes": 53,
       "comments": 11,
       "shares": 0,
-      "engagement_rate": 146.67
+      "engagement_rate": 143.48
     },
     {
       "id": "17996315284098631",
@@ -11889,12 +11889,12 @@
       "permalink": "https://www.instagram.com/p/BriL7uOldTt/",
       "like_count": 41,
       "comments_count": 4,
-      "reach": 8,
+      "reach": 9,
       "saved": 1,
       "likes": 41,
       "comments": 4,
       "shares": 0,
-      "engagement_rate": 575.0
+      "engagement_rate": 511.11
     },
     {
       "id": "17979963283153417",
@@ -12069,12 +12069,12 @@
       "permalink": "https://www.instagram.com/p/BookBzyl-jc/",
       "like_count": 37,
       "comments_count": 0,
-      "reach": 26,
+      "reach": 27,
       "saved": 1,
       "likes": 37,
       "comments": 0,
       "shares": 0,
-      "engagement_rate": 146.15
+      "engagement_rate": 140.74
     },
     {
       "id": "17953932634182583",
@@ -12369,12 +12369,12 @@
       "permalink": "https://www.instagram.com/p/BlBMMWTBTwb/",
       "like_count": 23,
       "comments_count": 1,
-      "reach": 21,
+      "reach": 22,
       "saved": 0,
       "likes": 23,
       "comments": 1,
       "shares": 0,
-      "engagement_rate": 114.29
+      "engagement_rate": 109.09
     },
     {
       "id": "17960509885039135",
